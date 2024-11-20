@@ -115,8 +115,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backgroundImageView" destination="kWX-h1-VLT" id="bEY-k3-sjN"/>
                         <outlet property="cityLabel" destination="CWP-r8-Jsy" id="8cQ-3l-ufV"/>
-                        <outlet property="conditionImageView" destination="kWX-h1-VLT" id="9BX-p1-WbX"/>
+                        <outlet property="conditionImageView" destination="mYn-vV-MBC" id="fxe-Om-W2I"/>
                         <outlet property="searchField" destination="2eh-wL-W34" id="Mdn-d0-ZRy"/>
                         <outlet property="temperatureLabel" destination="w9o-tW-03D" id="mF4-vV-JxK"/>
                     </connections>

@@ -11,6 +11,7 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -82,7 +83,8 @@ extension WeatherViewController: WeatherManagerDelegate {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-            //self.conditionImageView.image = UIImage(systemName: "dark_background")
+            
+            self.backgroundImageView.image = UIImage(sysemName: "dark_background")
             
         }
     }
