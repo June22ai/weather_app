@@ -82,6 +82,8 @@ extension WeatherViewController: WeatherManagerDelegate {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
+            //self.conditionImageView.image = UIImage(systemName: "dark_background")
+            
         }
     }
     
