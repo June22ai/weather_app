@@ -46,7 +46,7 @@ extension WeatherViewController: UITextFieldDelegate {
         func searchWeather(){
             if let cityName = searchField.text{
                 // 入力された都市名に基づいて背景画像を変更
-                //changeBackgroundImage(for: cityName)
+                changeBackgroundImage(for: cityName)
                 weatherManager.fetchWeather(cityName)
             }
         }
