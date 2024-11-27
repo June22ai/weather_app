@@ -133,7 +133,7 @@ extension WeatherViewController {
     }
 }
 
-//// MARK:- 背景画像変更メソッド追加
+// MARK:- 背景画像変更メソッド追加
 //extension WeatherViewController {
 //
 //    func changeBackgroundImage(for cityName: String) {
@@ -141,7 +141,7 @@ extension WeatherViewController {
 //        if cityName.lowercased() == "tokyo" {
 //            self.backgroundImageView.image = UIImage(named: "tokyo_background")
 //        } else {
-//            self.backgroundImageView.image = UIImage(named: "dark_background")
+//            self.backgroundImageView.image = UIImage(named: "night_background")
 //            // 他の都市名が入力された時の背景
 //        }
 //    }
