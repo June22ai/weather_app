@@ -45,12 +45,16 @@ extension WeatherViewController: UITextFieldDelegate {
     
         func searchWeather(){
             if let cityName = searchField.text{
+                weatherManager.fetchWeather(cityName)
+
                 //入力された都市名に基づいて背景画像を変更
                 changeBackgroundImage(for: cityName)
 
             }
         }
         
+
+    
         // when keyboard return clicked
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             searchField.endEditing(true)    //dismiss keyboard
@@ -79,15 +83,14 @@ extension WeatherViewController: UITextFieldDelegate {
 
 //MARK:- View update extension
 extension WeatherViewController: WeatherManagerDelegate {
-    
+    //検索してきた結果を取得、更新
+    //ここで背景画像を変更する処理
     func updateWeather(weatherModel: WeatherModel){
         DispatchQueue.main.sync {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-            // 天気情報に応じて背景画像を設定
-            self.backgroundImageView.image = UIImage(systemName: "tokyo_background")
-
+            
             
         }
     }
@@ -118,21 +121,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
         print(error)
     }
 }
-
-// MARK:- 背景画像変更メソッド追加
-//extension WeatherViewController {
-//
-//    func changeBackgroundImage(for cityName: String) {
-//        // 入力された都市名が"tokyo"の場合のみ背景画像を変更
-//        guard cityName.lowercased() == "tokyo" else {
-//            // "tokyo"以外の場合、処理を何もせずに戻る
-//            return
-//        }
-//
-//        // "tokyo"の場合のみ背景画像を変更
-//        self.backgroundImageView.image = UIImage(named: "tokyo_background")
-//    }
-//}
 
 // MARK:- 背景画像変更メソッド追加
 extension WeatherViewController {
