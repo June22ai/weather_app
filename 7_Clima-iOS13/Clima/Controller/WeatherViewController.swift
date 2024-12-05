@@ -47,8 +47,8 @@ extension WeatherViewController: UITextFieldDelegate {
             if let cityName = searchField.text{
                 weatherManager.fetchWeather(cityName)
 
-                //入力された都市名に基づいて背景画像を変更
-                changeBackgroundImage(for: cityName)
+//                //入力された都市名に基づいて背景画像を変更
+//                changeBackgroundImage(for: cityName)
 
             }
         }
@@ -90,7 +90,8 @@ extension WeatherViewController: WeatherManagerDelegate {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-            
+    //入力された都市名に基づいて背景画像を変更
+            changeBackgroundImage(for:weatherModel.cityName)
             
         }
     }
