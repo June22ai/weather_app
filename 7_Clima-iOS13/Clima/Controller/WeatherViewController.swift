@@ -42,12 +42,16 @@ extension WeatherViewController: UITextFieldDelegate {
             searchWeather()
         }
     
-        func searchWeather(){
-            if let cityName = searchField.text{
-                weatherManager.fetchWeather(cityName)
+       func searchWeather() {
+           if let cityName = searchField.text, !cityName.isEmpty {
+    //コンソールにログ出力 (都市名と共に)
+        print("action:search, city:\(cityName)")
+    //都市名を渡して天気データを取得
+        weatherManager.fetchWeather(cityName)
             }
-        }
-        
+       }
+  
+    
         // when keyboard return clicked
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             searchField.endEditing(true)    //dismiss keyboard
