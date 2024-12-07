@@ -47,14 +47,9 @@ extension WeatherViewController: UITextFieldDelegate {
             if let cityName = searchField.text{
                 weatherManager.fetchWeather(cityName)
 
-//                //入力された都市名に基づいて背景画像を変更
-//                changeBackgroundImage(for: cityName)
-
             }
         }
         
-
-    
         // when keyboard return clicked
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             searchField.endEditing(true)    //dismiss keyboard
