@@ -10,8 +10,12 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
+<<<<<<< HEAD
+    
+=======
 
     @IBOutlet weak var backgroundImageView: UIImageView!
+>>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -29,20 +33,44 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchField.delegate = self
     }
-
-
+    
+    
 }
- 
+
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {
     
-        @IBAction func searchBtnClicked(_ sender: UIButton) {
-            searchField.endEditing(true)    //dismiss keyboard
-            print(searchField.text!)
-            
-            searchWeather()
-        }
+    @IBAction func searchBtnClicked(_ sender: UIButton) {
+        searchField.endEditing(true)    //dismiss keyboard
+        print(searchField.text!)
+        
+        searchWeather()
+    }
     
+<<<<<<< HEAD
+    
+    func searchWeather() {
+        guard let cityName = searchField.text, !cityName.isEmpty else {
+            // cityNameがnilまたは空文字の場合、ここで処理を中断
+            print("City name is empty or nil.")
+            return
+        }
+        //コンソールにログ出力 (都市名と共に)
+=======
+ logging
+       func searchWeather() {
+           if let cityName = searchField.text, !cityName.isEmpty {
+    //コンソールにログ出力 (都市名と共に)
+>>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
+        print("action:search, city:\(cityName)")
+        //都市名を渡して天気データを取得
+        weatherManager.fetchWeather(cityName)
+<<<<<<< HEAD
+    }
+=======
+            }
+       }
+  
         func searchWeather(){
             if let cityName = searchField.text{
                 weatherManager.fetchWeather(cityName)
@@ -54,31 +82,34 @@ extension WeatherViewController: UITextFieldDelegate {
         }
         
 
+main
+>>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
     
-        // when keyboard return clicked
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            searchField.endEditing(true)    //dismiss keyboard
-            print(searchField.text!)
-            
-            searchWeather()
+    
+    // when keyboard return clicked
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchField.endEditing(true)    //dismiss keyboard
+        print(searchField.text!)
+        
+        searchWeather()
+        return true
+    }
+    
+    // when textfield deselected
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        // by using "textField" (not "searchField") this applied to any textField in this Controller(cuz of delegate = self)
+        if textField.text != "" {
             return true
+        }else{
+            textField.placeholder = "Type something here"
+            return false            // check if city name is valid
         }
-        
-        // when textfield deselected
-        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-            // by using "textField" (not "searchField") this applied to any textField in this Controller(cuz of delegate = self)
-            if textField.text != "" {
-                return true
-            }else{
-                textField.placeholder = "Type something here"
-                return false            // check if city name is valid
-            }
-        }
-        
-        // when textfield stop editing (keyboard dismissed)
-        func textFieldDidEndEditing(_ textField: UITextField) {
-    //        searchField.text = ""   // clear textField
-        }
+    }
+    
+    // when textfield stop editing (keyboard dismissed)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //        searchField.text = ""   // clear textField
+    }
 }
 
 //MARK:- View update extension
