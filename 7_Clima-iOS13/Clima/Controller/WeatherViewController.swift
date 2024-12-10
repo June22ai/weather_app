@@ -10,12 +10,9 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-<<<<<<< HEAD
     
-=======
-
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
->>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -41,57 +38,34 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UITextFieldDelegate {
     
     @IBAction func searchBtnClicked(_ sender: UIButton) {
-        searchField.endEditing(true)    //dismiss keyboard
-        print(searchField.text!)
+        self.searchField.endEditing(true)    //dismiss keyboard
+        print(self.searchField.text!)
         
-        searchWeather()
+        self.searchWeather() //searchWeather()メソッドを呼び出す
     }
     
-<<<<<<< HEAD
     
     func searchWeather() {
         guard let cityName = searchField.text, !cityName.isEmpty else {
-            // cityNameがnilまたは空文字の場合、ここで処理を中断
+            //cityNameがnilまたは空文字の場合、ここで処理を中断
             print("City name is empty or nil.")
             return
         }
-        //コンソールにログ出力 (都市名と共に)
-=======
- logging
-       func searchWeather() {
-           if let cityName = searchField.text, !cityName.isEmpty {
-    //コンソールにログ出力 (都市名と共に)
->>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
+        
+        //コンソールにログ出力 (都市名と共に
         print("action:search, city:\(cityName)")
         //都市名を渡して天気データを取得
-        weatherManager.fetchWeather(cityName)
-<<<<<<< HEAD
+        self.weatherManager.fetchWeather(cityName)
     }
-=======
-            }
-       }
-  
-        func searchWeather(){
-            if let cityName = searchField.text{
-                weatherManager.fetchWeather(cityName)
-
-//                //入力された都市名に基づいて背景画像を変更
-//                changeBackgroundImage(for: cityName)
-
-            }
-        }
-        
-
-main
->>>>>>> 307d48ca95c9acc003ed7165a970d6696b692f54
     
+    //}
     
     // when keyboard return clicked
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchField.endEditing(true)    //dismiss keyboard
-        print(searchField.text!)
+        self.searchField.endEditing(true)//dismiss keyboard
+        print(self.searchField.text!)
         
-        searchWeather()
+        self.searchWeather()// searchWeather() メソッドを呼び出す
         return true
     }
     
@@ -110,8 +84,8 @@ main
     func textFieldDidEndEditing(_ textField: UITextField) {
         //        searchField.text = ""   // clear textField
     }
+    
 }
-
 //MARK:- View update extension
 extension WeatherViewController: WeatherManagerDelegate {
     //検索してきた結果を取得、更新
@@ -121,7 +95,7 @@ extension WeatherViewController: WeatherManagerDelegate {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-    //入力された都市名に基づいて背景画像を変更
+            //入力された都市名に基づいて背景画像を変更
             changeBackgroundImage(for:weatherModel.cityName)
             
         }
@@ -156,7 +130,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
 
 // MARK:- 背景画像変更メソッド追加
 extension WeatherViewController {
-
+    
     func changeBackgroundImage(for cityName: String) {
         //入力された都市名に基づいて背景画像を変更
         if cityName.lowercased() == "tokyo" {
