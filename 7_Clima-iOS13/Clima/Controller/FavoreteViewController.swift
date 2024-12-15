@@ -16,16 +16,13 @@ class FavoreteViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func GoBack(_ sender: Any) {
+    @IBAction func GoBack(_ sender: UIButton) {
         
         //Storyboardで別のViewControllerに遷移する
-        if let nextViewController = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") {
-                self.present(nextViewController, animated: true, completion: nil)
-            }
-//        let next = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") {
-//            self.present(next!, animated: true, completion: nil)
-//
-//        }
+        if let WeaterViewController = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") {
+            self.present(WeaterViewController, animated: true, completion: nil)
+        }
+
         /*
          // MARK: - Navigation
          

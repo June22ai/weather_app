@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-
+    
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -28,10 +28,15 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchField.delegate = self
     }
-
-
+    //MARK:- 次の画面へ遷移
+    @IBAction func NextPage(_ sender: UIButton) {
+        
+        // Storyboard IDを使って次の画面をインスタンス化
+        if let FavoreteViewController = storyboard?.instantiateViewController(withIdentifier: "FavoreteViewController") {
+            self.navigationController?.pushViewController(FavoreteViewController, animated: true)
+        }
+    }
 }
- 
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {
     
