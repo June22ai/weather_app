@@ -15,23 +15,25 @@ class FavoreteViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    
-    @IBAction func GoBack(_ sender: UIButton) {
-        
-        //Storyboardで別のViewControllerに遷移する
-        if let WeaterViewController = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") {
-            self.present(WeaterViewController, animated: true, completion: nil)
+    // 画面遷移用のメソッド（ボタン押下時に遷移する例）
+        @IBAction func GoBack(_ sender: UIButton) {
+            
+// ナビゲーションコントローラーが存在する場合に戻る
+            if let navigationController = self.navigationController {
+                navigationController.popViewController(animated: true)
+            } else {
+                print("Error: NavigationController is not available.")
+            }
+            /*
+             // MARK: - Navigation
+             
+             // In a storyboard-based application, you will often want to do a little preparation before navigation
+             override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+             // Get the new view controller using segue.destination.
+             // Pass the selected object to the new view controller.
+             }
+             */
+            
         }
-
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
-        
     }
-}
+

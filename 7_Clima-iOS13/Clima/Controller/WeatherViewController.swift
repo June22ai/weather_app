@@ -28,14 +28,18 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchField.delegate = self
     }
-    //MARK:- 次の画面へ遷移
+    //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        
-        // Storyboard IDを使って次の画面をインスタンス化
-        if let FavoreteViewController = storyboard?.instantiateViewController(withIdentifier: "FavoreteViewController") {
-            self.navigationController?.pushViewController(FavoreteViewController, animated: true)
+        performSegue(withIdentifier: "showFavoreteScreen", sender: self)
+    }
+    // Segueの準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // 遷移先がFavoreteViewControllerであるか確認
+        if segue.destination is FavoreteViewController {
+            
         }
     }
+
 }
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {
