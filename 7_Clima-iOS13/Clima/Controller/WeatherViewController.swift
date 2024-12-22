@@ -30,7 +30,7 @@ class WeatherViewController: UIViewController {
     }
     //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: self)
+        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
     }
     // Segueの準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

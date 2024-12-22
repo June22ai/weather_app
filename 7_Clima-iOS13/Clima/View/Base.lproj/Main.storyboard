@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
-                                <rect key="frame" x="0.0" y="48" width="374" height="814"/>
+                                <rect key="frame" x="20" y="41" width="374" height="814"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-vV-Mot">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -101,7 +101,7 @@
                                         <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
                                         <connections>
                                             <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
-                                            <segue destination="EtE-D9-8Cf" kind="show" id="6Nl-nd-YUB"/>
+                                            <segue destination="EtE-D9-8Cf" kind="presentation" identifier="showFavoreteScreen" id="6Nl-nd-YUB"/>
                                         </connections>
                                     </button>
                                 </subviews>
