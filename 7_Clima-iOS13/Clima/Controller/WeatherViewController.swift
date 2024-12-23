@@ -17,6 +17,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var jokeLabel: UILabel!
+   
     
     
     //MARK: Properties
@@ -29,6 +31,7 @@ class WeatherViewController: UIViewController {
         locationManager.delegate = self
         weatherManager.delegate = self
         searchField.delegate = self
+        
     }
     
     
@@ -58,7 +61,6 @@ extension WeatherViewController: UITextFieldDelegate {
         self.weatherManager.fetchWeather(cityName)
     }
     
-    //}
     
     // when keyboard return clicked
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -140,4 +142,48 @@ extension WeatherViewController {
             // 他の都市名が入力された時の背景
         }
     }
-}
+// MARK:- DadJokeメソッド追加
+extension WeatherViewController {
+        
+    @IBAction func fetchDadJoke() {
+        //APIのURL
+        let urlString = "https://icanhazdadjoke.com/api"
+        //URLを作成
+        guard let url = URL(string: urlString) else { return }
+        //URLリクエストの設定
+        var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+        //JSON形式でのレスポンスを指定
+            //レスポンスのデータはJSON形式
+        //APIにGETリクエストを送信
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            //エラーチェック
+            if let error = error {
+                print("Error fetching joke: \(error)")
+                    return
+                }
+                
+            //データが存在する場合
+            if let data = data {
+                do {
+                //JSONデータをパース
+                //JSONは辞書型[String: Any]として解析される
+                //その中から"joke"というキーに対応する値（文字列）を取り出す
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                        let joke = json["joke"] as? String {
+                        //ジョークを表示（UIの更新をメインスレッドで行う）
+                        DispatchQueue.main.async {
+                            self.jokeLabel.text = joke
+                            }
+                        }
+                } catch {
+                    print("Error parsing JSON: \(error)")
+                    }
+                }
+            }
+            
+            // タスク開始
+            task.resume()
+        }
+        
+    }
