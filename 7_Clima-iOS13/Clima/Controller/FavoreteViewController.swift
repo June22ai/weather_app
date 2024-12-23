@@ -34,7 +34,8 @@ class FavoreteViewController: UIViewController {
             
         }
     }
-    @objc private func goBack() {
+    @IBAction func GoBack(_ sender: UIButton) {
+    
         if let navigationController = self.navigationController {
             // ナビゲーションスタックの一番上の画面（FavoriteViewController）をポップして戻る
             navigationController.popViewController(animated: true)
