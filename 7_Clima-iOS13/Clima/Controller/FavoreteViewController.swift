@@ -15,16 +15,7 @@ class FavoreteViewController: UIViewController {
 //
 //        // Do any additional setup after loading the view.
 //    }
-//    // 画面遷移用のメソッド（ボタン押下時に遷移する例）
-//        @IBAction func GoBack(_ sender: UIButton) {
-//
-//
-//// ナビゲーションコントローラーが存在する場合に戻る
-//            if let navigationController = self.navigationController {
-//                navigationController.popViewController(animated: true)
-//            } else {
-//                print("Error: NavigationController is not available.")
-//            }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //segue.destinationがFavoreteViewController型かどうかをチェック
@@ -35,25 +26,14 @@ class FavoreteViewController: UIViewController {
         }
     }
     @IBAction func GoBack(_ sender: UIButton) {
-    
+    //今回はナビゲーションコントローラーは使用していないので↓が呼ばれる事はない
         if let navigationController = self.navigationController {
-            // ナビゲーションスタックの一番上の画面（FavoriteViewController）をポップして戻る
+            //ナビゲーションスタックの一番上の画面（FavoriteViewController）をポップして戻る
             navigationController.popViewController(animated: true)
         } else {
             // モーダル遷移している場合はdismissを使う
             dismiss(animated: true, completion: nil)
         }
-    
-    
-            /*
-             // MARK: - Navigation
-             
-             // In a storyboard-based application, you will often want to do a little preparation before navigation
-             override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-             // Get the new view controller using segue.destination.
-             // Pass the selected object to the new view controller.
-             }
-             */
             
         }
     }
