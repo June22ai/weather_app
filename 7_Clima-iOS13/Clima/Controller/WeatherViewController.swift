@@ -11,8 +11,11 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     
+
+
     
     @IBOutlet weak var backgroundImageView: UIImageView!
+ 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -30,9 +33,25 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchField.delegate = self
     }
+
+    //MARK:- 次の画面へ遷移するためのボタンアクション
+    @IBAction func NextPage(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+    }
+    // Segueの準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // 遷移先がFavoreteViewControllerであるか確認
+        if segue.destination is FavoreteViewController {
+            
+        }
+    }
+
+}
+
     
     
 }
+
 
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {
