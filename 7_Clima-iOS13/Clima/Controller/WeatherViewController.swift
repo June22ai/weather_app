@@ -116,8 +116,13 @@ extension WeatherViewController: WeatherManagerDelegate {
             temperatureLabel.text = weatherModel.temperatureString
             cityLabel.text = weatherModel.cityName
             self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
+
+            
+            self.backgroundImageView.image = UIImage(systemName: "dark_background")
+
             //入力された都市名に基づいて背景画像を変更
             changeBackgroundImage(for:weatherModel.cityName)
+
             
         }
     }
