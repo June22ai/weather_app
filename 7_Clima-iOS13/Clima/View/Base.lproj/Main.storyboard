@@ -12,7 +12,7 @@
         <!--Weather View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="WeatherViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherViewController" id="BYZ-38-t0r" customClass="WeatherViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g3Y-cT-2C3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -20,8 +20,8 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
-                                <rect key="frame" x="20" y="48" width="374" height="814"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
+                                <rect key="frame" x="20" y="41" width="374" height="814"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-vV-Mot">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -86,14 +86,51 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
+                                        <rect key="frame" x="98" y="309.5" width="276" height="414"/>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWP-r8-Jsy">
-                                        <rect key="frame" x="276" y="309.5" width="98" height="36"/>
+                                        <rect key="frame" x="276" y="733.5" width="98" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKj-xp-WRP" userLabel="Dad Joke">
+                                        <rect key="frame" x="278.5" y="355.5" width="95.5" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="ViC-eJ-hTA"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="goM-eW-nZ1"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Dad Joke"/>
+                                        <connections>
+                                            <action selector="fetchDadJoke" destination="BYZ-38-t0r" eventType="touchUpInside" id="O6l-sQ-FoM"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olF-LN-gFJ">
+                                        <rect key="frame" x="324" y="440.5" width="50" height="41.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41.5" id="1pQ-j8-OV2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
-                                        <rect key="frame" x="134" y="355.5" width="240" height="458.5"/>
+                                        <rect key="frame" x="134" y="492" width="240" height="322"/>
                                     </view>
+
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                        <rect key="frame" x="280.5" y="779.5" width="93.5" height="34.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
+                                        <connections>
+                                            <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
+                                            <segue destination="EtE-D9-8Cf" kind="presentation" identifier="showFavoreteScreen" id="6Nl-nd-YUB"/>
+                                        </connections>
+                                    </button>
+
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Tgv-vV-Mot" secondAttribute="trailing" id="Xxe-YD-sFY"/>
@@ -118,13 +155,55 @@
                         <outlet property="backgroundImageView" destination="kWX-h1-VLT" id="bEY-k3-sjN"/>
                         <outlet property="cityLabel" destination="CWP-r8-Jsy" id="8cQ-3l-ufV"/>
                         <outlet property="conditionImageView" destination="mYn-vV-MBC" id="fxe-Om-W2I"/>
+                        <outlet property="jokeLabel" destination="olF-LN-gFJ" id="WaW-a7-XUg"/>
                         <outlet property="searchField" destination="2eh-wL-W34" id="Mdn-d0-ZRy"/>
                         <outlet property="temperatureLabel" destination="w9o-tW-03D" id="mF4-vV-JxK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="118"/>
+
+            <point key="canvasLocation" x="137.68115942028987" y="117.85714285714285"/>
+
+            <point key="canvasLocation" x="-136.23188405797103" y="298.66071428571428"/>
+        </scene>
+        <!--Favorete View Controller-->
+        <scene sceneID="KiF-0Q-qdB">
+            <objects>
+                <viewController storyboardIdentifier="FavoreteViewController" id="EtE-D9-8Cf" customClass="FavoreteViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c7P-3d-jZF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-yG-fTD">
+                                <rect key="frame" x="138" y="515" width="138" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="戻る"/>
+                                <connections>
+                                    <action selector="GoBack:" destination="EtE-D9-8Cf" eventType="touchUpInside" id="WNd-h6-xHO"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMh-cA-enK">
+                                <rect key="frame" x="111" y="279" width="235" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="abO-MZ-sBt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OXD-7L-4Go"/>
+                    <connections>
+                        <outlet property="tableView" destination="LMh-cA-enK" id="vgv-r8-oeX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kwo-w9-jhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-933.33333333333337" y="95.758928571428569"/>
+
         </scene>
     </scenes>
     <resources>
