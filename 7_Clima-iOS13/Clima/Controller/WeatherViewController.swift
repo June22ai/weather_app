@@ -20,6 +20,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var jokeLabel: UILabel!
+    
     
     
     //MARK: Properties
@@ -32,6 +34,7 @@ class WeatherViewController: UIViewController {
         locationManager.delegate = self
         weatherManager.delegate = self
         searchField.delegate = self
+        
     }
 
     //MARK:- 次の画面へ遷移するためのボタンアクション
@@ -77,7 +80,6 @@ extension WeatherViewController: UITextFieldDelegate {
         self.weatherManager.fetchWeather(cityName)
     }
     
-    //}
     
     // when keyboard return clicked
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -159,4 +161,66 @@ extension WeatherViewController {
             // 他の都市名が入力された時の背景
         }
     }
+}
+// MARK:- DadJokeメソッド追加
+extension WeatherViewController {
+    
+    @IBAction func fetchDadJoke() {
+        
+        // ランダムなジョークを取得するためのURL
+        guard let url = URL(string: "https://icanhazdadjoke.com/") else {
+            print("Invalid URL")
+            return
+        }
+        
+        // リクエストの作成
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")  // JSON形式でレスポンスを受け取る
+        request.httpMethod = "GET"  // GETリクエスト
+        
+        // APIリクエストを実行
+        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            // エラーチェック
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            // HTTPレスポンスコードが200（成功）か確認
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                
+                // データが存在する場合はJSONに変換
+                if let data = data {
+                    do {
+                        // JSONデータを辞書型に変換
+                        let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                        
+                        // 取得したジョークの内容を表示
+                        if let jsonDict = jsonResponse as? [String: Any],
+                           let joke = jsonDict["joke"] as? String {
+                            // UI更新はメインスレッドで行う
+                            DispatchQueue.main.async {
+                                // ジョークを画面に表示する（例: ラベルにセット）
+                                print("Random Joke: \(joke)") // コンソールに表示
+                                self?.displayJoke(joke) // 表示するためのメソッド呼び出し
+                            }
+                        }
+                    } catch {
+                        print("Error parsing JSON: \(error.localizedDescription)")
+                    }
+                }
+            } else {
+                print("Failed to fetch joke: \(String(describing: response))")
+            }
+        }
+        
+        // タスクを実行
+        task.resume()
+    }
+    // ジョークを表示するためのメソッド
+    func displayJoke(_ joke: String) {
+        // ここでUILabelにジョークを表示
+        jokeLabel.text = joke
+    }
+    
 }
