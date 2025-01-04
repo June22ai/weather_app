@@ -8,6 +8,13 @@
 
 import UIKit
 
+// rail構造体（既存のコードに追加）
+struct rail {
+    var isShown: Bool // 鉄道線が表示されているかどうか
+    var railName: String // 鉄道線の名前（例: 山手線）
+    var stationArray: [String] // 駅名のリスト（例: 渋谷、新宿、池袋など）
+}
+
 class FavoreteViewController: UIViewController {
     
 //    override func viewDidLoad() {
@@ -16,6 +23,29 @@ class FavoreteViewController: UIViewController {
 //        // Do any additional setup after loading the view.
 //    }
 
+    @IBOutlet weak var tableView: UITableView!{
+        didSet {
+            tableView.dataSource = self
+            tableView.delegate = self
+        }
+    }
+    
+    // 既存のデータ構造を利用して、アコーディオン用のデータを設定
+    private let headerArray: [String] = ["山手線", "東横線", "田園都市線", "常磐線"]
+    private let yamanoteArray: [String] = ["渋谷", "新宿", "池袋"]
+    private let toyokoArray: [String] = ["自由ヶ丘", "日吉"]
+    private let dentoArray: [String] = ["溝の口", "二子玉川"]
+    private let jobanArray: [String] = ["上野"]
+
+    private lazy var courseArray = [
+        rail(isShown: true, railName: self.headerArray[0], stationArray: self.yamanoteArray),
+        rail(isShown: false, railName: self.headerArray[1], stationArray: self.toyokoArray),
+        rail(isShown: false, railName: self.headerArray[2], stationArray: self.dentoArray),
+        rail(isShown: false, railName: self.headerArray[3], stationArray: self.jobanArray)
+    ]
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //segue.destinationがFavoreteViewController型かどうかをチェック
@@ -37,4 +67,55 @@ class FavoreteViewController: UIViewController {
             
         }
     }
+//UITableViewDataSourceの拡張
+extension FavoreteViewController: UITableViewDataSource {
+    // courseArrayの数を返す
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return courseArray.count
+    }
+// アコーディオン機能を反映させるためisShownプロパティに基づいて
+    // 表示する行数を決定
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if courseArray[section].isShown {
+            return courseArray[section].stationArray.count
+        } else {
+            return 0
+        }
+    }
+//tableView(_:cellForRowAt:)：表示する駅名をセルに設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell.textLabel?.text = courseArray[indexPath.section].stationArray[indexPath.row]
+        return cell
+    }
 
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return courseArray[section].railName
+    }
+}
+//UITableViewDelegateの拡張
+//tableView(_:viewForHeaderInSection:)：セクションヘッダーにタップジェスチャーを追加これにより、ヘッダーをタップすると「アコーディオンの開閉」というアクションが実行される
+extension FavoreteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UITableViewHeaderFooterView()
+//headerTapped(sender:)ヘッダーがタップされると、該当セクションの isShown プロパティを切り替えて、テーブルビューの該当セクションを再読み込み
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
+        headerView.addGestureRecognizer(gesture)
+        headerView.tag = section
+        headerView.textLabel?.text = courseArray[section].railName
+        return headerView
+    }
+
+    @objc func headerTapped(sender: UITapGestureRecognizer) {
+        guard let section = sender.view?.tag else { return }
+
+        // アコーディオンの開閉（ビューの表示・非表示）切り替え(toggle)
+        // 展開状態を保持するために isShown フラグを使用
+        courseArray[section].isShown.toggle()
+
+        // セクションのアニメーション付き更新
+        tableView.beginUpdates()
+        tableView.reloadSections([section], with: .automatic)
+        tableView.endUpdates()
+    }
+}
