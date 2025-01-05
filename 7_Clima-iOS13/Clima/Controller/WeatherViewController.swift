@@ -143,6 +143,11 @@ extension WeatherViewController {
         }
     }
 }
+
+// APIのレスポンスに対応する構造体
+struct DadJokeResponse: Codable {
+    let joke: String
+}
 // MARK:- DadJokeメソッド追加
 extension WeatherViewController {
     
@@ -170,24 +175,35 @@ extension WeatherViewController {
             // HTTPレスポンスコードが200（成功）か確認
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 
-                // データが存在する場合はJSONに変換
+                // データが存在する場合はJSONデータをデコード
                 if let data = data {
                     do {
                         // JSONデータを辞書型に変換
-                        let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+//                        let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                        // JSONDecoderを使用してデコード
+                        let decoder = JSONDecoder()
+                        let dadJokeResponse = try decoder.decode(DadJokeResponse.self, from: data)
                         
                         // 取得したジョークの内容を表示
-                        if let jsonDict = jsonResponse as? [String: Any],
-                           let joke = jsonDict["joke"] as? String {
-                            // UI更新はメインスレッドで行う
-                            DispatchQueue.main.async {
-                                // ジョークを画面に表示する（例: ラベルにセット）
-                                print("Random Joke: \(joke)") // コンソールに表示
-                                self?.displayJoke(joke) // 表示するためのメソッド呼び出し
+                        DispatchQueue.main.async {
+                            // ジョークを画面に表示する
+                            print("Random Joke: \(dadJokeResponse.joke)")
+                            // 表示するためのメソッド呼び出し
+                            self?.displayJoke(dadJokeResponse.joke)
+                            
+                        // 取得したジョークの内容を表示
+//                        if let jsonDict = jsonResponse as? [String: Any],
+//                           let joke = jsonDict["joke"] as? String {
+//                            // UI更新はメインスレッドで行う
+//                            DispatchQueue.main.async {
+//                                // ジョークを画面に表示する（例: ラベルにセット）
+//                                print("Random Joke: \(joke)")
+//                            // コンソールに表示
+//                                self?.displayJoke(joke)
                             }
-                        }
+                        
                     } catch {
-                        print("Error parsing JSON: \(error.localizedDescription)")
+                        print("Error decoding JSON: \(error.localizedDescription)")
                     }
                 }
             } else {
