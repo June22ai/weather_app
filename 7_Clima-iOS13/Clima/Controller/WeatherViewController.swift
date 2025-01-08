@@ -144,80 +144,75 @@ extension WeatherViewController {
     }
 }
 
-// APIのレスポンスに対応する構造体
-struct DadJokeResponse: Codable {
+
+//1. JSONレスポンスの全体構造を表現する構造体 (Data)
+//今後APIのレスポンスが変更されてもDadJokeResponseDataの変更だけで済む
+struct DadJokeResponseData: Codable {
     let joke: String
 }
-// MARK:- DadJokeメソッド追加
+//2. ジョークのデータ部分を表現する構造体 (Model)
+struct DadJoke: Codable {
+    let joke: String
+}
+
+//MARK:- WeatherViewController内にdisplayJokeメソッドを追加
+//3. ジョークの取得と表示の処理
 extension WeatherViewController {
-    
+    //fetchDadJokeで呼び出すためのメソッド
+    func displayJoke(_ joke: String) {
+        //ジョークをUILabelに表示
+        jokeLabel.text = joke
+    }
     @IBAction func fetchDadJoke() {
         
-        // ランダムなジョークを取得するためのURL
-        guard let url = URL(string: "https://icanhazdadjoke.com/") else {
-            print("Invalid URL")
-            return
+        let jokeManager = DadJokeManager()
+        jokeManager.fetchJoke { [weak self] joke in
+            DispatchQueue.main.async {
+                if let joke = joke {
+                    self?.displayJoke(joke)//displayJokeを呼び出す
+                } else {
+                    self?.jokeLabel.text = "Couldn't fetch a joke."
+                }
+            }
         }
-        
-        // リクエストの作成
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Accept")  // JSON形式でレスポンスを受け取る
-        request.httpMethod = "GET"  // GETリクエスト
-        
-        // APIリクエストを実行
-        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
-            // エラーチェック
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
+    }
+//DadJokeManagerクラスを作成して、APIからデータを取得しDadJokeデータを返す
+    class DadJokeManager {
+        func fetchJoke(completion: @escaping (String?) -> Void) {
+            guard let url = URL(string: "https://icanhazdadjoke.com/") else {
+                print("Invalid URL")
+                completion(nil)
                 return
             }
             
-            // HTTPレスポンスコードが200（成功）か確認
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")  //JSON形式でレスポンスを受け取る
+            request.httpMethod = "GET"  // GETリクエスト
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                // エラーチェック
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
                 
-                // データが存在する場合はJSONデータをデコード
+                //HTTPレスポンスコードが200（成功）か確認
                 if let data = data {
+                    let decoder = JSONDecoder()
                     do {
-                        // JSONデータを辞書型に変換
-//                        let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
                         // JSONDecoderを使用してデコード
-                        let decoder = JSONDecoder()
-                        let dadJokeResponse = try decoder.decode(DadJokeResponse.self, from: data)
-                        
-                        // 取得したジョークの内容を表示
-                        DispatchQueue.main.async {
-                            // ジョークを画面に表示する
-                            print("Random Joke: \(dadJokeResponse.joke)")
-                            // 表示するためのメソッド呼び出し
-                            self?.displayJoke(dadJokeResponse.joke)
-                            
-                        // 取得したジョークの内容を表示
-//                        if let jsonDict = jsonResponse as? [String: Any],
-//                           let joke = jsonDict["joke"] as? String {
-//                            // UI更新はメインスレッドで行う
-//                            DispatchQueue.main.async {
-//                                // ジョークを画面に表示する（例: ラベルにセット）
-//                                print("Random Joke: \(joke)")
-//                            // コンソールに表示
-//                                self?.displayJoke(joke)
-                            }
-                        
+                        let dadJokeResponse = try decoder.decode(DadJokeResponseData.self, from: data)
+                        // 取得したジョークを返す
+                        completion(dadJokeResponse.joke)
                     } catch {
                         print("Error decoding JSON: \(error.localizedDescription)")
+                        completion(nil)
                     }
                 }
-            } else {
-                print("Failed to fetch joke: \(String(describing: response))")
             }
+            
+            task.resume()
         }
-        
-        // タスクを実行
-        task.resume()
     }
-    // ジョークを表示するためのメソッド
-    func displayJoke(_ joke: String) {
-        // ここでUILabelにジョークを表示
-        jokeLabel.text = joke
-    }
-    
 }
