@@ -17,11 +17,29 @@ struct Rail {
 
 class FavoreteViewController: UIViewController {
     
-    //    override func viewDidLoad() {
-    //        super.viewDidLoad()
-    //
-    //        // Do any additional setup after loading the view.
-    //    }
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            // Do any additional setup after loading the view.
+           //    }
+            view.backgroundColor = .lightGray
+            
+            // 背景に画像を設定する場合
+            let backgroundImage = UIImage(named: "your_background_image") // 画像名を変更
+            let imageView = UIImageView(image: backgroundImage)
+            imageView.contentMode = .scaleAspectFill
+            imageView.frame = view.bounds
+            view.addSubview(imageView)
+            view.sendSubviewToBack(imageView) // 背景に画像を配置
+            
+            // ラベルなど、必要なUIコンポーネントを設定
+            let label = UILabel()
+            label.text = "お気に入り画面"
+            label.font = UIFont.systemFont(ofSize: 24)
+            label.frame = CGRect(x: 100, y: 200, width: 200, height: 50)
+            view.addSubview(label)
+        }
+    
+    
     //前画面から遷移した時
     @IBOutlet weak var tableView:UITableView!
     //@IBOutlet var tableView: UITableView!
