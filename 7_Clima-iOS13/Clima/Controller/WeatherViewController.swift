@@ -42,18 +42,22 @@ class WeatherViewController: UIViewController {
 
 //MARK:- お気に入り画面へ遷移するためのボタンアクション
     @IBAction func favoriteButtun(_ sender: UIButton) {
-    
+        
         // 遷移先の画面を作成
         let favoreteVC = FavoreteViewController()
-
-        // モーダル遷移設定
-        favoreteVC.modalPresentationStyle = .fullScreen
-        favoreteVC.modalTransitionStyle = .flipHorizontal // 右にスライドするエフェクト
+        
+        // UINavigationControllerを作成
+        let navigationController = UINavigationController(rootViewController: favoreteVC)
+        
+    
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .flipHorizontal
+        // 右にスライド
         
         // 画面遷移
-        present(favoreteVC, animated: true, completion: nil)
+        present(navigationController, animated: true, completion: nil)
     }
-
+    
 }
 
 //MARK:- TextField extension
