@@ -171,12 +171,17 @@
         <scene sceneID="KiF-0Q-qdB">
             <objects>
                 <viewController storyboardIdentifier="FavoreteViewController" id="EtE-D9-8Cf" customClass="FavoreteViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="c7P-3d-jZF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
+                    <view key="view" contentMode="scaleToFill" id="c7P-3d-jZF" userLabel="View">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1e3-G9-9sH" userLabel="Table View" customClass="UITableView">
+                                <rect key="frame" x="27" y="58" width="359" height="614"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-yG-fTD">
-                                <rect key="frame" x="138" y="515" width="138" height="47"/>
+                                <rect key="frame" x="138" y="707" width="138" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="戻る"/>
@@ -184,20 +189,13 @@
                                     <action selector="GoBack:" destination="EtE-D9-8Cf" eventType="touchUpInside" id="WNd-h6-xHO"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMh-cA-enK">
-                                <rect key="frame" x="111" y="279" width="235" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="abO-MZ-sBt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="OXD-7L-4Go"/>
                     <connections>
-                        <outlet property="tableView" destination="LMh-cA-enK" id="vgv-r8-oeX"/>
+                        <outlet property="tableView" destination="1e3-G9-9sH" id="7z2-q3-aP6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kwo-w9-jhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -208,9 +206,9 @@
     </scenes>
     <resources>
         <image name="background" width="662" height="662"/>
-        <image name="cloud.rain" catalog="system" width="126" height="128"/>
-        <image name="location.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="cloud.rain" catalog="system" width="32" height="32"/>
+        <image name="location.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="magnifyingglass" catalog="system" width="32" height="32"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
