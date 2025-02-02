@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  DetailViewController.swift
 //  Clima
 //
-//  Created by Ai Tanigwa on 2025/01/25.
+//  Created by Ai Tanigwa on 2025/02/01.
 //  Copyright © 2025 App Brewery. All rights reserved.
 //
 
