@@ -23,10 +23,11 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        locationManager.delegate = self
-        //        weatherManager.delegate = self
-        
-        //}
+        // XIBをロードしてビューに設定
+        if let nibView = Bundle.main.loadNibNamed("DetailView", owner: self, options: nil)?.first as? UIView {
+            self.view = nibView // ここでXIBのビューを現在のビューに設定
+            
+        }
         // 背景画像を設定するUIImageViewを作成
         let backgroundImageView = UIImageView()
         

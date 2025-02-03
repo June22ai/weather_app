@@ -95,7 +95,6 @@
 				ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */,
 				29437D982D0709DE007401F0 /* FavoreteViewController.swift */,
 				29B8018A2D4EF068007C8B4B /* DetailViewController.swift */,
-				29B8018B2D4EF068007C8B4B /* DetailView.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -104,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				ADAA27B6231BBFAF00365194 /* Main.storyboard */,
+				29B8018B2D4EF068007C8B4B /* DetailView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
