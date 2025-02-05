@@ -20,7 +20,7 @@ class FavoreteViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
     
-            navigationItem.title = "都市一覧"
+            self.navigationItem.title = "都市一覧"
         }
     
     //前画面から遷移した時
