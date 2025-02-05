@@ -28,18 +28,35 @@ class WeatherViewController: UIViewController {
         weatherManager.delegate = self
         searchField.delegate = self
     }
+    
     //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+                performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+            //}
+        // 遷移先のビューコントローラーを NavigationController でラップして遷移
+        let favoreteVC = FavoreteViewController()
+        let navigationController = UINavigationController(rootViewController: favoreteVC)
+        present(navigationController, animated: true, completion: nil)
     }
-    // Segueの準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    // 遷移先がFavoreteViewControllerであるか確認
-        if segue.destination is FavoreteViewController {
-            
-        }
-    }
-
+        
+    //    // Segueの準備
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //    // 遷移先がFavoreteViewControllerであるか確認
+    //        if segue.destination is FavoreteViewController {
+    //
+    //        }
+    //    }
+//    // Segueの準備
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // 遷移先が FavoreteViewController であるか確認
+//        if segue.identifier == "showFavoreteScreen" {
+//            if let navigationController = segue.destination as? UINavigationController {
+//                if navigationController.topViewController is FavoreteViewController {
+//                    // 必要ならデータを渡す処理
+//                }
+//            }
+//        }
+//    }
 //MARK:- お気に入り画面へ遷移するためのボタンアクション
     @IBAction func favoriteButtun(_ sender: UIButton) {
         

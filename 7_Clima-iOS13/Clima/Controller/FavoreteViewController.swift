@@ -20,7 +20,7 @@ class FavoreteViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
     
-            title = "都市一覧"
+            navigationItem.title = "都市一覧"
         }
     
     //前画面から遷移した時
@@ -28,10 +28,9 @@ class FavoreteViewController: UIViewController {
     //@IBOutlet var tableView: UITableView!
     {
         didSet {
-            //tableView.frame = view.frame
             tableView.dataSource = self
             tableView.delegate = self
-            //tableView.tableFooterView = UIView(frame: .zero)
+            tableView.tableFooterView = UIView()
         }
     }
     
