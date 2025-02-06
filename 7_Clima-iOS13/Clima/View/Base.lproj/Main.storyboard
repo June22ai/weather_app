@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
-                                <rect key="frame" x="20" y="41" width="374" height="721"/>
+                                <rect key="frame" x="20" y="41" width="374" height="765"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-vV-Mot">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -95,17 +95,17 @@
                                         <rect key="frame" x="98" y="355.5" width="276" height="276.5"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
-                                        <rect key="frame" x="280.5" y="642" width="93.5" height="34.5"/>
+                                        <rect key="frame" x="280.5" y="642" width="93.5" height="78.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
                                         <connections>
                                             <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
-                                            <segue destination="EtE-D9-8Cf" kind="presentation" identifier="showFavoreteScreen" id="6Nl-nd-YUB"/>
+                                            <segue destination="L2k-kb-5Qe" kind="presentation" identifier="showFavoreteScreen" id="6Nl-nd-YUB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDz-0A-gZN" userLabel="お気に入り">
-                                        <rect key="frame" x="263" y="686.5" width="111" height="34.5"/>
+                                        <rect key="frame" x="263" y="730.5" width="111" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="お気に入り"/>
                                         <connections>
@@ -143,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2605.7971014492755" y="-197.54464285714286"/>
+            <point key="canvasLocation" x="3515.9420289855075" y="-197.54464285714286"/>
         </scene>
         <!--Favorete View Controller-->
         <scene sceneID="KiF-0Q-qdB">
@@ -157,6 +157,7 @@
                                 <rect key="frame" x="0.0" y="58" width="414" height="618"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cell"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-yG-fTD">
                                 <rect key="frame" x="138" y="707" width="138" height="42"/>
@@ -178,25 +179,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kwo-w9-jhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-933.33333333333337" y="95.758928571428569"/>
+            <point key="canvasLocation" x="-23.188405797101453" y="95.758928571428569"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="EvN-a1-lIJ">
+        <scene sceneID="IAo-pg-tfD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nyu-W7-420" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L2k-kb-5Qe" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XNz-Of-pgu">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gaj-zc-zbU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="UGD-ne-3PL"/>
+                        <segue destination="EtE-D9-8Cf" kind="relationship" relationship="rootViewController" id="em1-jf-35w"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xb8-fT-dnL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="coE-8E-74P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1695.6521739130435" y="-197.54464285714286"/>
+            <point key="canvasLocation" x="-933.33333333333337" y="95.758928571428569"/>
         </scene>
     </scenes>
     <resources>
