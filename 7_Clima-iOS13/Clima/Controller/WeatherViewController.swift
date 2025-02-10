@@ -24,9 +24,6 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        // ナビゲーションバーのデリゲートを設定（もし必要な場合）
-//            self.navigationController?.delegate = self
-        
         locationManager.delegate = self
         weatherManager.delegate = self
         searchField.delegate = self
@@ -34,44 +31,15 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate {
     
     //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+        //performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showFavoreteScreen" {
-            // 遷移先が FavoreteViewController であることを確認
-           // if segue.destination is FavoreteViewController {
-                // 必要な設定をここで行います
-              //  print("遷移先は FavoreteViewController です")
-            //}
+        if segue.identifier == "showFavoreteScreen"{
+           
         }
     }
-//        // FavoreteViewController を手動でモーダル遷移
-//    let favoreteVC = FavoreteViewController()
-//        // UINavigationController でラップしてから表示
-//        let navigationController = UINavigationController(rootViewController: favoreteVC)
-//        // navigationController が画面の一部として表示されるようにモーダル遷移
-//        present(navigationController, animated: true, completion: nil)
-//    }
-    
-//    //MARK:- お気に入り画面へ遷移するためのボタンアクション
-//    @IBAction func favoriteButtun(_ sender: UIButton) {
-//
-//        // 遷移先の画面を作成
-//        let favoreteVC = FavoreteViewController()
-//
-//        // UINavigationControllerを作成
-//        let navigationController = UINavigationController(rootViewController: favoreteVC)
-//
-//
-//        navigationController.modalPresentationStyle = .fullScreen
-//        navigationController.modalTransitionStyle = .flipHorizontal
-//        // 右にスライド
-//
-//        // 画面遷移
-//        present(navigationController, animated: true, completion: nil)
-//    }
-//
+
 }
 
 //MARK:- TextField extension

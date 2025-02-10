@@ -19,23 +19,9 @@ class FavoreteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.title = "都市一覧"
-        
-//        // 戻るボタンの追加
-//        let backButton = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(goBack))
-//        self.navigationItem.leftBarButtonItem = backButton
-
+       
     }
-//    // 戻るボタンがタップされたときに呼ばれる
-//    @objc func goBack() {
-//        if let navigationController = self.navigationController {
-//            // ナビゲーションスタックの一番上の画面（FavoriteViewController）をポップして戻る
-//            navigationController.popViewController(animated: true)
-//        } else {
-//            // モーダル遷移している場合はdismissを使う
-//            dismiss(animated: true, completion: nil)
-//        }
-    //}
+
     //前画面から遷移した時
     @IBOutlet weak var tableView:UITableView!
     {
