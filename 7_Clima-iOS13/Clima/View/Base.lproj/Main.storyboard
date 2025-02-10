@@ -14,14 +14,14 @@
             <objects>
                 <viewController storyboardIdentifier="WeatherViewController" id="BYZ-38-t0r" customClass="WeatherViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g3Y-cT-2C3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
-                                <rect key="frame" x="20" y="41" width="374" height="721"/>
+                                <rect key="frame" x="20" y="41" width="374" height="789"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-vV-Mot">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -92,19 +92,20 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
-                                        <rect key="frame" x="98" y="355.5" width="276" height="276.5"/>
+                                        <rect key="frame" x="98" y="355.5" width="276" height="62.5"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
-                                        <rect key="frame" x="280.5" y="642" width="93.5" height="34.5"/>
+                                        <rect key="frame" x="280.5" y="428" width="93.5" height="316.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
                                         <connections>
                                             <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
+                                            <segue destination="EtE-D9-8Cf" kind="show" identifier="showFavoreteScreen" id="gbJ-aR-T37"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDz-0A-gZN" userLabel="お気に入り">
-                                        <rect key="frame" x="263" y="686.5" width="111" height="34.5"/>
+                                        <rect key="frame" x="263" y="754.5" width="111" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="お気に入り"/>
                                         <connections>
@@ -149,7 +150,7 @@
             <objects>
                 <viewController storyboardIdentifier="FavoreteViewController" id="EtE-D9-8Cf" customClass="FavoreteViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c7P-3d-jZF" userLabel="View">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1e3-G9-9sH" userLabel="Table View" customClass="UITableView">
@@ -165,6 +166,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="戻る"/>
                                 <connections>
                                     <action selector="GoBack:" destination="EtE-D9-8Cf" eventType="touchUpInside" id="WNd-h6-xHO"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="L0P-Ye-lA4"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -199,6 +201,10 @@
             <point key="canvasLocation" x="3515.9420289855075" y="-197.54464285714286"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="gbJ-aR-T37"/>
+        <segue reference="L0P-Ye-lA4"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="background" width="662" height="662"/>
         <image name="cloud.rain" catalog="system" width="126" height="128"/>

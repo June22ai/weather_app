@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -24,6 +24,9 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        // ナビゲーションバーのデリゲートを設定（もし必要な場合）
+//            self.navigationController?.delegate = self
+        
         locationManager.delegate = self
         weatherManager.delegate = self
         searchField.delegate = self
@@ -32,21 +35,24 @@ class WeatherViewController: UIViewController {
     //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
         performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-        //}
-        // 遷移先のビューコントローラーを NavigationController でラップして遷移
-        let favoreteVC = FavoreteViewController()
-        let navigationController = UINavigationController(rootViewController: favoreteVC)
-        present(navigationController, animated: true, completion: nil)
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Segueの識別子をチェック
-        if segue.identifier == "perfumeSegue" {
-            // 遷移先がFavoreteViewControllerであることを確認
-            if segue.destination is FavoreteViewController {
-            }
+        if segue.identifier == "showFavoreteScreen" {
+            // 遷移先が FavoreteViewController であることを確認
+           // if segue.destination is FavoreteViewController {
+                // 必要な設定をここで行います
+              //  print("遷移先は FavoreteViewController です")
+            //}
         }
     }
-    
+//        // FavoreteViewController を手動でモーダル遷移
+//    let favoreteVC = FavoreteViewController()
+//        // UINavigationController でラップしてから表示
+//        let navigationController = UINavigationController(rootViewController: favoreteVC)
+//        // navigationController が画面の一部として表示されるようにモーダル遷移
+//        present(navigationController, animated: true, completion: nil)
+//    }
     
 //    //MARK:- お気に入り画面へ遷移するためのボタンアクション
 //    @IBAction func favoriteButtun(_ sender: UIButton) {
