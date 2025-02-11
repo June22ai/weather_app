@@ -19,20 +19,22 @@ class FavoreteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        title = "都市一覧"
+        
     }
-
+    
     //前画面から遷移した時
     @IBOutlet weak var tableView:UITableView!
     {
         didSet {
-            
+            //tableView.frame = view.frame
             tableView.dataSource = self
             tableView.delegate = self
             //tableView.tableFooterView = UIView()
         }
     }
-   
+    
     //既存のデータ構造を利用して、アコーディオン用のデータを設定
     private let headerArray: [String] = ["EU", "アジア", "オセアニア", "アフリカ"]
     private let euArray: [String] = ["ベルリン", "アムステルダム", "ロンドン"]
@@ -47,14 +49,27 @@ class FavoreteViewController: UIViewController {
         Area(isShown: false, areaName: self.headerArray[3], cityArray: self.africaArray)
     ]
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //segue.destinationがFavoreteViewController型かどうかをチェック
-        if segue.destination is FavoreteViewController {
-            // 型チェックだけ行って特に処理はしない
-            print("遷移先は FavoreteViewController です")
-            
-        }
+    // UITableViewDelegateのdidSelectRowAtで遷移処理
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCity = courseArray[indexPath.section].cityArray[indexPath.row]
+        
+        // DetailViewControllerに遷移
+        navigateToDetailViewController(cityName: selectedCity)
     }
+    
+    // 遷移先のDetailViewControllerを表示するメソッド
+    func navigateToDetailViewController(cityName: String) {
+        // DetailViewControllerのインスタンスを作成
+        let detailVC = DetailViewController(nibName: "DetailView", bundle: nil)
+        
+        // 都市名を渡す
+        detailVC.cityName = cityName
+        
+        // ナビゲーションコントローラを使用して遷移
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
     @IBAction func GoBack(_ sender: UIButton) {
         
         if let navigationController = self.navigationController {
@@ -66,6 +81,15 @@ class FavoreteViewController: UIViewController {
         }
         
     }
+//    // ここで遷移処理を統一
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetail", let destinationVC = segue.destination as? DetailViewController {
+//            if let selectedCity = sender as? String {
+//                destinationVC.cityName = selectedCity // cityNameを渡す
+//            }
+//        }
+//    }
+    
 }
 //UITableViewDataSourceの拡張
 extension FavoreteViewController: UITableViewDataSource {
@@ -75,13 +99,9 @@ extension FavoreteViewController: UITableViewDataSource {
     }
     
     //アコーディオン機能を反映させるためisShownプロパティに基づいて
-    // 表示する行数を決定
+        // 表示する行数を決定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if courseArray[section].isShown {
-            return courseArray[section].cityArray.count
-        } else {
-            return 0
-        }
+        return courseArray[section].isShown ? courseArray[section].cityArray.count : 0
     }
     //tableView(_:cellForRowAt:)：表示する都市名をセルに設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,7 +109,7 @@ extension FavoreteViewController: UITableViewDataSource {
         cell.textLabel?.text = courseArray[indexPath.section].cityArray[indexPath.row]
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return courseArray[section].areaName
     }
@@ -98,25 +118,54 @@ extension FavoreteViewController: UITableViewDataSource {
 //tableView(_:viewForHeaderInSection:)：セクションヘッダーにタップジェスチャーを追加これにより、ヘッダーをタップすると「アコーディオンの開閉」というアクションが実行される
 extension FavoreteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UITableViewHeaderFooterView()
-        //headerTapped(sender:)ヘッダーがタップされると、該当セクションの isShown プロパティを切り替えて、テーブルビューの該当セクションを再読み込み
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
-        headerView.addGestureRecognizer(gesture)
-        headerView.tag = section
-        headerView.textLabel?.text = courseArray[section].areaName
-        return headerView
+            let headerView = UITableViewHeaderFooterView()
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
+            headerView.addGestureRecognizer(gesture)
+            headerView.tag = section
+            headerView.textLabel?.text = courseArray[section].areaName
+            return headerView
+//    //既にtableView(_:didSelectRowAt:)が定義されているため、重複して定義しないように1つに統合
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let selectedCity = courseArray[indexPath.section].cityArray[indexPath.row]
+//        //        performSegue(withIdentifier: "showDetail", sender: selectedCity) // 遷移に都市名を渡す
+//        //    }
+//        //
+//        // Segueを使わずに遷移する場合、直接DetailViewControllerを作成
+//        navigateToDetailViewController(cityName: selectedCity)
     }
-
+    
+//    // DetailViewControllerに遷移するメソッド
+//    func navigateToDetailViewController(cityName: String) {
+//        // DetailViewControllerのインスタンスを作成
+//        let detailVC = DetailViewController(nibName: "DetailView", bundle: nil)
+//
+//        // 都市名を渡す
+//        detailVC.cityName = cityName
+//
+//        // ナビゲーションコントローラを使用して遷移
+//        self.navigationController?.pushViewController(detailVC, animated: true)
+//    }
+    //headerTapped(sender:)ヘッダーがタップされると、該当セクションの isShown プロパティを切り替えて、テーブルビューの該当セクションを再読み込み
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UITableViewHeaderFooterView()
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
+//        headerView.addGestureRecognizer(gesture)
+//        headerView.tag = section
+//        headerView.textLabel?.text = courseArray[section].areaName
+//        return headerView
+//    }
+    
     @objc func headerTapped(sender: UITapGestureRecognizer) {
         guard let section = sender.view?.tag else { return }
-
+        
         // アコーディオンの開閉（ビューの表示・非表示）切り替え(toggle)
         // 展開状態を保持するために isShown フラグを使用
         courseArray[section].isShown.toggle()
-
+        
         // セクションのアニメーション付き更新
         tableView.beginUpdates()
         tableView.reloadSections([section], with: .automatic)
         tableView.endUpdates()
     }
 }
+
