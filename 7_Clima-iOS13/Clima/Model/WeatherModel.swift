@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherModel {
+struct WeatherModel: Decodable {
     let cityName: String
     let conditionId: Int
     let temperature: Double
@@ -41,5 +41,15 @@ struct WeatherModel {
             return "cloud"
         }
     }
+  
+    // JSONレスポンスに基づいたイニシャライザ（初期化メソッド）
+        enum CodingKeys: String, CodingKey {
+            case cityName = "name"
+            case temperature = "main.temp"
+            case conditionId = "weather.0.id"
+        }
+    }
     
-}
+    
+    
+//}

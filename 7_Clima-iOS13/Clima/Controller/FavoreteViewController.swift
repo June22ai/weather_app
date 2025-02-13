@@ -81,14 +81,7 @@ class FavoreteViewController: UIViewController {
         }
         
     }
-//    // ここで遷移処理を統一
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail", let destinationVC = segue.destination as? DetailViewController {
-//            if let selectedCity = sender as? String {
-//                destinationVC.cityName = selectedCity // cityNameを渡す
-//            }
-//        }
-//    }
+
     
 }
 //UITableViewDataSourceの拡張
@@ -99,7 +92,7 @@ extension FavoreteViewController: UITableViewDataSource {
     }
     
     //アコーディオン機能を反映させるためisShownプロパティに基づいて
-        // 表示する行数を決定
+    // 表示する行数を決定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return courseArray[section].isShown ? courseArray[section].cityArray.count : 0
     }
@@ -107,9 +100,12 @@ extension FavoreteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
         cell.textLabel?.text = courseArray[indexPath.section].cityArray[indexPath.row]
+        // セルの右に「>」を追加
+        cell.accessoryType = .disclosureIndicator
+        
         return cell
     }
-    
+    // セクションのタイトル（国名）のセルに網掛けを設定
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return courseArray[section].areaName
     }
@@ -118,42 +114,16 @@ extension FavoreteViewController: UITableViewDataSource {
 //tableView(_:viewForHeaderInSection:)：セクションヘッダーにタップジェスチャーを追加これにより、ヘッダーをタップすると「アコーディオンの開閉」というアクションが実行される
 extension FavoreteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let headerView = UITableViewHeaderFooterView()
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
-            headerView.addGestureRecognizer(gesture)
-            headerView.tag = section
-            headerView.textLabel?.text = courseArray[section].areaName
-            return headerView
-//    //既にtableView(_:didSelectRowAt:)が定義されているため、重複して定義しないように1つに統合
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let selectedCity = courseArray[indexPath.section].cityArray[indexPath.row]
-//        //        performSegue(withIdentifier: "showDetail", sender: selectedCity) // 遷移に都市名を渡す
-//        //    }
-//        //
-//        // Segueを使わずに遷移する場合、直接DetailViewControllerを作成
-//        navigateToDetailViewController(cityName: selectedCity)
+        let headerView = UITableViewHeaderFooterView()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
+        headerView.addGestureRecognizer(gesture)
+        headerView.tag = section
+        headerView.textLabel?.text = courseArray[section].areaName
+        // 国名セルに網掛けを追加
+        headerView.contentView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        return headerView
     }
-    
-//    // DetailViewControllerに遷移するメソッド
-//    func navigateToDetailViewController(cityName: String) {
-//        // DetailViewControllerのインスタンスを作成
-//        let detailVC = DetailViewController(nibName: "DetailView", bundle: nil)
-//
-//        // 都市名を渡す
-//        detailVC.cityName = cityName
-//
-//        // ナビゲーションコントローラを使用して遷移
-//        self.navigationController?.pushViewController(detailVC, animated: true)
-//    }
-    //headerTapped(sender:)ヘッダーがタップされると、該当セクションの isShown プロパティを切り替えて、テーブルビューの該当セクションを再読み込み
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UITableViewHeaderFooterView()
-//        let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
-//        headerView.addGestureRecognizer(gesture)
-//        headerView.tag = section
-//        headerView.textLabel?.text = courseArray[section].areaName
-//        return headerView
-//    }
     
     @objc func headerTapped(sender: UITapGestureRecognizer) {
         guard let section = sender.view?.tag else { return }
