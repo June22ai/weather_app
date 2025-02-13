@@ -31,16 +31,40 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate {
     
     //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        //performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+        
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFavoreteScreen"{
-           
+            
         }
     }
-
-}
+//    //MARK:- お気に入り画面へ遷移するためのボタンアクション
+//    @IBAction func favoriteButtun(_ sender: UIButton) {
+//
+//        // 遷移先の画面を作成
+//        let favoreteVC = FavoreteViewController()
+//
+//        // UINavigationControllerを作成
+//        let navigationController = UINavigationController(rootViewController: favoreteVC)
+//
+//
+//        navigationController.modalPresentationStyle = .fullScreen
+//        navigationController.modalTransitionStyle = .flipHorizontal
+//        // 右にスライド
+//
+//        // 画面遷移
+//        present(navigationController, animated: true, completion: nil)
+//        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//            // Segueの識別子をチェック
+//            if segue.identifier == "perfumeSegue" {
+//                // 遷移先がFavoreteViewControllerであることを確認
+//                if segue.destination is FavoreteViewController {
+//                }
+//            }
+//        }
+        
+    }
 
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {
