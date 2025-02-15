@@ -19,45 +19,68 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
     var cityName: String?
     var weatherManager = WeatherDataManager()
     
+    // カタカナ都市名と英語都市名のマッピング辞書
+    let cityNameDictionary: [String: String] = [
+        "東京": "Tokyo",
+        "ベルリン": "Berlin",
+        "アムステルダム": "Amsterdam",
+        "ロンドン": "London",
+        "バンコク": "Bangkok",
+        "シドニー": "Sydney",
+        "メルボルン": "Melbourne",
+        "ケープタウン": "Cape Town"
+        // 他の都市名もここに追加可能
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // WeatherDataManagerのデリゲートを設定
         weatherManager.delegate = self
         
-        // 都市名が設定されている場合、その都市の天気を取得
+        //ここにカタカナから英語に変換するコードを記述する
         if let cityName = cityName {
-            cityLabel.text = cityName
-            weatherManager.fetchWeather(cityName) // 天気情報を取得
+            if let englishCityName = cityNameDictionary[cityName] {
+                // 辞書にあれば英語名に変換
+                self.cityName = englishCityName
+            }
+            cityLabel.text = self.cityName
+            // 天気情報を取得するためにAPI通信を呼び出す
+            if let cityName = self.cityName {
+                weatherManager.fetchWeather(cityName) // 天気情報を取得
+            }
+            
         }
         
     }
     // WeatherManagerDelegateメソッド - 天気情報が更新された場合
     func updateWeather(weatherModel: WeatherModel) {
         DispatchQueue.main.async {
-            self.temperatureLabel.text = "\(weatherModel.temperature)°C"
+            // temperatureString を使って表示
+            self.temperatureLabel.text = "\(weatherModel.temperatureString)"
             
-            // 天気情報に応じた画像を表示
-            switch weatherModel.conditionId {
-            case 200..<300:
-                self.conditionImageView.image = UIImage(named: "storm")
-            case 300..<400:
-                self.conditionImageView.image = UIImage(named: "rain")
-            case 500..<600:
-                self.conditionImageView.image = UIImage(named: "rain")
-            case 600..<700:
-                self.conditionImageView.image = UIImage(named: "snow")
-            case 700..<800:
-                self.conditionImageView.image = UIImage(named: "mist")
-            case 800:
-                self.conditionImageView.image = UIImage(named: "sunny")
-            case 801..<900:
-                self.conditionImageView.image = UIImage(named: "cloudy")
+            // conditionName を使って、天気アイコンを表示
+            let condition = weatherModel.conditionName
+            switch condition {
+            case "cloud.bolt":
+                self.conditionImageView.image = UIImage(systemName: "cloud.bolt")
+            case "cloud.drizzle":
+                self.conditionImageView.image = UIImage(systemName: "cloud.drizzle")
+            case "cloud.rain":
+                self.conditionImageView.image = UIImage(systemName: "cloud.rain")
+            case "cloud.snow":
+                self.conditionImageView.image = UIImage(systemName: "cloud.snow")
+            case "cloud.fog":
+                self.conditionImageView.image = UIImage(systemName: "cloud.fog")
+            case "sun.max":
+                self.conditionImageView.image = UIImage(systemName: "sun.max")
             default:
-                self.conditionImageView.image = UIImage(named: "default")
+                self.conditionImageView.image = UIImage(systemName: "cloud")
             }
         }
     }
+    
+    
     // WeatherManagerDelegateメソッド - エラーが発生した場合
     func failedWithError(error: Error) {
         DispatchQueue.main.async {
@@ -65,8 +88,8 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
             self.conditionImageView.image = nil
         }
     }
-    //}
- //WeatherModel に Decodable プロトコルを適用。Decodable に準拠することで、JSONDecoder がデータを自動的にデコードできるようになる
+    
+    //WeatherModel に Decodable プロトコルを適用。Decodable に準拠することで、JSONDecoder がデータを自動的にデコードできるようになる
     func fetchWeather(cityName: String) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(cityName)"
         if let url = URL(string: urlString) {

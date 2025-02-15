@@ -93,7 +93,7 @@ extension WeatherViewController: UITextFieldDelegate {
     
     // when textfield deselected
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        // by using "textField" (not "searchField") this applied to any textField in this Controller(cuz of delegate = self)
+        
         if textField.text != "" {
             return true
         }else{

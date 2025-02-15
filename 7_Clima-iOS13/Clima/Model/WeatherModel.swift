@@ -42,14 +42,5 @@ struct WeatherModel: Decodable {
         }
     }
   
-    // JSONレスポンスに基づいたイニシャライザ（初期化メソッド）
-        enum CodingKeys: String, CodingKey {
-            case cityName = "name"
-            case temperature = "main.temp"
-            case conditionId = "weather.0.id"
-        }
-    }
     
-    
-    
-//}
+}
