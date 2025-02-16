@@ -28,10 +28,10 @@ class FavoreteViewController: UIViewController {
     @IBOutlet weak var tableView:UITableView!
     {
         didSet {
-            //tableView.frame = view.frame
+            
             tableView.dataSource = self
             tableView.delegate = self
-            //tableView.tableFooterView = UIView()
+           
         }
     }
     

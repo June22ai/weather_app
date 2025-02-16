@@ -60,7 +60,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l7N-57-JhL" userLabel="Temperature Label">
                     <rect key="frame" x="47" y="263" width="172" height="118"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="75"/>
+                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="80"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>

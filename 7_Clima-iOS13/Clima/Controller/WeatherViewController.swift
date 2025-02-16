@@ -29,8 +29,22 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate {
         searchField.delegate = self
     }
     
-    //MARK:- 次の画面へ遷移するためのボタンアクション
-    @IBAction func NextPage(_ sender: UIButton) {
+    
+    //    //MARK:- 次の画面へ遷移するためのボタンアクション
+    
+    //@IBAction func NextPage(_ sender: UIButton) {
+    //          performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+    //}
+    
+    //      // Segueの準備
+    //      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //      // 遷移先がFavoreteViewControllerであるか確認
+    //          if segue.destination is FavoreteViewController {
+    //
+    //          }
+    //      }
+    //MARK:- お気に入り画面へ遷移するためのボタンアクション
+    @IBAction func favoriteButtun(_ sender: UIButton) {
         
     }
     
@@ -39,32 +53,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate {
             
         }
     }
-//    //MARK:- お気に入り画面へ遷移するためのボタンアクション
-//    @IBAction func favoriteButtun(_ sender: UIButton) {
-//
-//        // 遷移先の画面を作成
-//        let favoreteVC = FavoreteViewController()
-//
-//        // UINavigationControllerを作成
-//        let navigationController = UINavigationController(rootViewController: favoreteVC)
-//
-//
-//        navigationController.modalPresentationStyle = .fullScreen
-//        navigationController.modalTransitionStyle = .flipHorizontal
-//        // 右にスライド
-//
-//        // 画面遷移
-//        present(navigationController, animated: true, completion: nil)
-//        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//            // Segueの識別子をチェック
-//            if segue.identifier == "perfumeSegue" {
-//                // 遷移先がFavoreteViewControllerであることを確認
-//                if segue.destination is FavoreteViewController {
-//                }
-//            }
-//        }
-        
-    }
+    
+    
+}
 
 //MARK:- TextField extension
 extension WeatherViewController: UITextFieldDelegate {

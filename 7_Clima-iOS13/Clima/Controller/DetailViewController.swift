@@ -56,9 +56,12 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
     // WeatherManagerDelegateメソッド - 天気情報が更新された場合
     func updateWeather(weatherModel: WeatherModel) {
         DispatchQueue.main.async {
-            // temperatureString を使って表示
-            self.temperatureLabel.text = "\(weatherModel.temperatureString)"
             
+            // 小数点以下を切り捨てて整数に変換
+            let temperature = Int(weatherModel.temperature)  // temperatureは気温の値
+            
+            // 整数として表示
+            self.temperatureLabel.text = "\(temperature)"
             // conditionName を使って、天気アイコンを表示
             let condition = weatherModel.conditionName
             switch condition {
@@ -84,6 +87,7 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
     // WeatherManagerDelegateメソッド - エラーが発生した場合
     func failedWithError(error: Error) {
         DispatchQueue.main.async {
+            print("Error: \(error.localizedDescription)")  // デバッグ用
             self.temperatureLabel.text = "天気情報の取得に失敗しました"
             self.conditionImageView.image = nil
         }
@@ -91,7 +95,10 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
     
     //WeatherModel に Decodable プロトコルを適用。Decodable に準拠することで、JSONDecoder がデータを自動的にデコードできるようになる
     func fetchWeather(cityName: String) {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(cityName)"
+    //
+        let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+
         if let url = URL(string: urlString) {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error {

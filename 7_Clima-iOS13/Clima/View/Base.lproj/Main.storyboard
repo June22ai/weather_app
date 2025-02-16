@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
+                                <rect key="frame" x="0.0" y="-58" width="414" height="896"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
                                 <rect key="frame" x="20" y="41" width="374" height="789"/>
@@ -91,27 +91,32 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="V52-YC-AUA">
+                                        <rect key="frame" x="132" y="355.5" width="242" height="34.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                                <rect key="frame" x="0.0" y="0.0" width="111" height="34.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
+                                                <connections>
+                                                    <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jWg-tR-zqE"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDz-0A-gZN" userLabel="お気に入り">
+                                                <rect key="frame" x="131" y="0.0" width="111" height="34.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="お気に入り"/>
+                                                <connections>
+                                                    <action selector="favoriteButtun:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lfO-u9-NBb"/>
+                                                    <segue destination="EtE-D9-8Cf" kind="show" id="H3A-Zp-rde"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
-                                        <rect key="frame" x="98" y="355.5" width="276" height="62.5"/>
+                                        <rect key="frame" x="324" y="400" width="50" height="389"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
-                                        <rect key="frame" x="280.5" y="428" width="93.5" height="316.5"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
-                                        <connections>
-                                            <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
-                                            <segue destination="EtE-D9-8Cf" kind="show" identifier="showFavoreteScreen" id="gbJ-aR-T37"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDz-0A-gZN" userLabel="お気に入り">
-                                        <rect key="frame" x="263" y="754.5" width="111" height="34.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="お気に入り"/>
-                                        <connections>
-                                            <action selector="favoriteButtun:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lfO-u9-NBb"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Tgv-vV-Mot" secondAttribute="trailing" id="Xxe-YD-sFY"/>
@@ -202,6 +207,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="H3A-Zp-rde"/>
         <segue reference="L0P-Ye-lA4"/>
     </inferredMetricsTieBreakers>
     <resources>
