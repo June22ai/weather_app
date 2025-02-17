@@ -28,7 +28,7 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
         "バンコク": "Bangkok",
         "シドニー": "Sydney",
         "メルボルン": "Melbourne",
-        "ケープタウン": "Cape Town"
+        "ケープタウン": "Cape%20Town"
         // 他の都市名もここに追加可能
     ]
     
@@ -44,7 +44,7 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
                 // 辞書にあれば英語名に変換
                 self.cityName = englishCityName
             }
-            cityLabel.text = self.cityName
+            //cityLabel.text = self.cityName
             // 天気情報を取得するためにAPI通信を呼び出す
             if let cityName = self.cityName {
                 weatherManager.fetchWeather(cityName) // 天気情報を取得
@@ -59,6 +59,9 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
             
             // 小数点以下を切り捨てて整数に変換
             let temperature = Int(weatherModel.temperature)  // temperatureは気温の値
+            // 都市名を表示
+            self.cityLabel.text = weatherModel.cityName
+            
             
             // 整数として表示
             self.temperatureLabel.text = "\(temperature)"
