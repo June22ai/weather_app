@@ -141,11 +141,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw_1">
                                         <rect key="frame" x="134" y="492" width="240" height="322"/>
                                     </view>
 
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3_1">
                                         <rect key="frame" x="280.5" y="779.5" width="93.5" height="34.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
                                         <state key="normal" title="Button"/>
@@ -156,7 +156,6 @@
                                         </connections>
                                     </button>
 
- main
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Tgv-vV-Mot" secondAttribute="trailing" id="Xxe-YD-sFY"/>
@@ -190,14 +189,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
- cell_tap
             <point key="canvasLocation" x="4426.0869565217399" y="-197.54464285714286"/>
 
 
             <point key="canvasLocation" x="137.68115942028987" y="117.85714285714285"/>
 
             <point key="canvasLocation" x="-136.23188405797103" y="298.66071428571428"/>
-main
         </scene>
         <!--Favorete View Controller-->
         <scene sceneID="KiF-0Q-qdB">
@@ -234,7 +231,6 @@ main
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kwo-w9-jhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
- cell_tap
             <point key="canvasLocation" x="-23.188405797101453" y="95.758928571428569"/>
         </scene>
         <!--Navigation Controller-->
@@ -257,7 +253,6 @@ main
 
             <point key="canvasLocation" x="-933.33333333333337" y="95.758928571428569"/>
 
-main
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
