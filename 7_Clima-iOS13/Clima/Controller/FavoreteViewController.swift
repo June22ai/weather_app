@@ -8,54 +8,70 @@
 
 import UIKit
 
-// rail構造体（既存のコードに追加）
-struct Rail {
-    var isShown: Bool // 鉄道線が表示されているかどうか
-    var railName: String // 鉄道線の名前（例: 山手線）
-    var stationArray: [String] // 駅名のリスト（例: 渋谷、新宿、池袋など）
+// Area構造体（既存のコードに追加）
+struct Area {
+    var isShown: Bool // 都市が表示されているかどうか
+    var areaName: String // 地域の名前（例: アジア）
+    var cityArray: [String] // 都市名のリスト（例: ベルリン、アムステルダム、ロンドンなど）
 }
 
 class FavoreteViewController: UIViewController {
     
-    //    override func viewDidLoad() {
-    //        super.viewDidLoad()
-    //
-    //        // Do any additional setup after loading the view.
-    //    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "都市一覧"
+        
+    }
+    
     //前画面から遷移した時
     @IBOutlet weak var tableView:UITableView!
-    //@IBOutlet var tableView: UITableView!
     {
         didSet {
+            
             tableView.dataSource = self
             tableView.delegate = self
+           
         }
     }
     
     //既存のデータ構造を利用して、アコーディオン用のデータを設定
-    private let headerArray: [String] = ["山手線", "東横線", "田園都市線", "常磐線"]
-    private let yamanoteArray: [String] = ["渋谷", "新宿", "池袋"]
-    private let toyokoArray: [String] = ["自由ヶ丘", "日吉"]
-    private let dentoArray: [String] = ["溝の口", "二子玉川"]
-    private let jobanArray: [String] = ["上野"]
+    private let headerArray: [String] = ["EU", "アジア", "オセアニア", "アフリカ"]
+    private let euArray: [String] = ["ベルリン", "アムステルダム", "ロンドン"]
+    private let asianArray: [String] = ["東京", "バンコク"]
+    private let oceaniaArray: [String] = ["シドニー", "メルボルン"]
+    private let africaArray: [String] = ["ケープタウン"]
     
     private lazy var courseArray = [
-        Rail(isShown: true, railName: self.headerArray[0], stationArray: self.yamanoteArray),
-        Rail(isShown: false, railName: self.headerArray[1], stationArray: self.toyokoArray),
-        Rail(isShown: false, railName: self.headerArray[2], stationArray: self.dentoArray),
-        Rail(isShown: false, railName: self.headerArray[3], stationArray: self.jobanArray)
+        Area(isShown: true, areaName: self.headerArray[0], cityArray: self.euArray),
+        Area(isShown: false, areaName: self.headerArray[1], cityArray: self.asianArray),
+        Area(isShown: false, areaName: self.headerArray[2], cityArray: self.oceaniaArray),
+        Area(isShown: false, areaName: self.headerArray[3], cityArray: self.africaArray)
     ]
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //segue.destinationがFavoreteViewController型かどうかをチェック
-        if segue.destination is FavoreteViewController {
-            // 型チェックだけ行って特に処理はしない
-            print("遷移先は FavoreteViewController です")
-            
-        }
+    // UITableViewDelegateのdidSelectRowAtで遷移処理
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCity = courseArray[indexPath.section].cityArray[indexPath.row]
+        
+        // DetailViewControllerに遷移
+        navigateToDetailViewController(cityName: selectedCity)
     }
+    
+    // 遷移先のDetailViewControllerを表示するメソッド
+    func navigateToDetailViewController(cityName: String) {
+        // DetailViewControllerのインスタンスを作成
+        let detailVC = DetailViewController(nibName: "DetailView", bundle: nil)
+        
+        // 都市名を渡す
+        detailVC.cityName = cityName
+        
+        // ナビゲーションコントローラを使用して遷移
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
     @IBAction func GoBack(_ sender: UIButton) {
-        //今回はナビゲーションコントローラーは使用していないので↓が呼ばれる事はない
+        
         if let navigationController = self.navigationController {
             //ナビゲーションスタックの一番上の画面（FavoriteViewController）をポップして戻る
             navigationController.popViewController(animated: true)
@@ -65,6 +81,8 @@ class FavoreteViewController: UIViewController {
         }
         
     }
+
+    
 }
 //UITableViewDataSourceの拡張
 extension FavoreteViewController: UITableViewDataSource {
@@ -72,24 +90,24 @@ extension FavoreteViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return courseArray.count
     }
-    // アコーディオン機能を反映させるためisShownプロパティに基づいて
+    
+    //アコーディオン機能を反映させるためisShownプロパティに基づいて
     // 表示する行数を決定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if courseArray[section].isShown {
-            return courseArray[section].stationArray.count
-        } else {
-            return 0
-        }
+        return courseArray[section].isShown ? courseArray[section].cityArray.count : 0
     }
-    //tableView(_:cellForRowAt:)：表示する駅名をセルに設定
+    //tableView(_:cellForRowAt:)：表示する都市名をセルに設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = courseArray[indexPath.section].stationArray[indexPath.row]
+        cell.textLabel?.text = courseArray[indexPath.section].cityArray[indexPath.row]
+        // セルの右に「>」を追加
+        cell.accessoryType = .disclosureIndicator
+        
         return cell
     }
-    
+    // セクションのタイトル（国名）のセルに網掛けを設定
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return courseArray[section].railName
+        return courseArray[section].areaName
     }
 }
 //UITableViewDelegateの拡張
@@ -97,11 +115,13 @@ extension FavoreteViewController: UITableViewDataSource {
 extension FavoreteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UITableViewHeaderFooterView()
-        //headerTapped(sender:)ヘッダーがタップされると、該当セクションの isShown プロパティを切り替えて、テーブルビューの該当セクションを再読み込み
         let gesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped(sender:)))
         headerView.addGestureRecognizer(gesture)
         headerView.tag = section
-        headerView.textLabel?.text = courseArray[section].railName
+        headerView.textLabel?.text = courseArray[section].areaName
+        // 国名セルに網掛けを追加
+        headerView.contentView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
         return headerView
     }
     
@@ -118,3 +138,4 @@ extension FavoreteViewController: UITableViewDelegate {
         tableView.endUpdates()
     }
 }
+

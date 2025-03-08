@@ -9,13 +9,12 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate  {
     
-
-
+    
+    
     
     @IBOutlet weak var backgroundImageView: UIImageView!
- 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -32,109 +31,10 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         
         locationManager.delegate = self
-        weatherManager.delegate = self
+        //weatherManager.delegate = self
         searchField.delegate = self
         
     }
-
-    //MARK:- 次の画面へ遷移するためのボタンアクション
-    @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-    }
-    // Segueの準備
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    // 遷移先がFavoreteViewControllerであるか確認
-        if segue.destination is FavoreteViewController {
-            
-        }
-    }
-
-}
-
-    
-    
-}
-
-
-//MARK:- TextField extension
-extension WeatherViewController: UITextFieldDelegate {
-    
-    @IBAction func searchBtnClicked(_ sender: UIButton) {
-        self.searchField.endEditing(true)    //dismiss keyboard
-        print(self.searchField.text!)
-        
-        self.searchWeather() //searchWeather()メソッドを呼び出す
-    }
-    
-    
-    func searchWeather() {
-        guard let cityName = searchField.text, !cityName.isEmpty else {
-            //cityNameがnilまたは空文字の場合、ここで処理を中断
-            print("City name is empty or nil.")
-            return
-        }
-        
-        //コンソールにログ出力 (都市名と共に
-        print("action:search, city:\(cityName)")
-        //都市名を渡して天気データを取得
-        self.weatherManager.fetchWeather(cityName)
-    }
-    
-    
-    // when keyboard return clicked
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.searchField.endEditing(true)//dismiss keyboard
-        print(self.searchField.text!)
-        
-        self.searchWeather()// searchWeather() メソッドを呼び出す
-        return true
-    }
-    
-    // when textfield deselected
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        // by using "textField" (not "searchField") this applied to any textField in this Controller(cuz of delegate = self)
-        if textField.text != "" {
-            return true
-        }else{
-            textField.placeholder = "Type something here"
-            return false            // check if city name is valid
-        }
-    }
-    
-    // when textfield stop editing (keyboard dismissed)
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        //        searchField.text = ""   // clear textField
-    }
-    
-}
-//MARK:- View update extension
-extension WeatherViewController: WeatherManagerDelegate {
-    //検索してきた結果を取得、更新
-    //ここで背景画像を変更する処理
-    func updateWeather(weatherModel: WeatherModel){
-        DispatchQueue.main.sync {
-            temperatureLabel.text = weatherModel.temperatureString
-            cityLabel.text = weatherModel.cityName
-            self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-
-            
-            self.backgroundImageView.image = UIImage(systemName: "dark_background")
-
-            //入力された都市名に基づいて背景画像を変更
-            changeBackgroundImage(for:weatherModel.cityName)
-
-            
-        }
-    }
-    
-    func failedWithError(error: Error){
-        print(error)
-    }
-}
-
-// MARK:- CLLocation
-extension WeatherViewController: CLLocationManagerDelegate {
-    
     @IBAction func locationButtonClicked(_ sender: UIButton) {
         // Get permission
         locationManager.requestWhenInUseAuthorization()
@@ -152,7 +52,110 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
+    
+    //MARK:- お気に入り画面へ遷移するためのボタンアクション
+    @IBAction func favoriteButtun(_ sender: UIButton) {
+        
+    }
+    
+    //MARK:- 次の画面へ遷移するためのボタンアクション
+    @IBAction func NextPage(_ sender: UIButton) {
+        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFavoreteScreen"{
+            
+        }
+    }
+    
 }
+
+//MARK:- TextField extension
+extension WeatherViewController: UITextFieldDelegate {
+    
+    @IBAction func searchBtnClicked(_ sender: UIButton) {
+        
+        searchField.endEditing(true)    //dismiss keyboard
+        print(searchField.text!)
+        
+        searchWeather()
+    }
+    
+    func searchWeather(){
+        if let cityName = searchField.text{
+            weatherManager.fetchWeather(cityName)
+            
+            self.searchField.endEditing(true)    //dismiss keyboard
+            print(self.searchField.text!)
+            
+            self.searchWeather() //searchWeather()メソッドを呼び出す
+        }
+        
+        
+        func searchWeather() {
+            guard let cityName = searchField.text, !cityName.isEmpty else {
+                //cityNameがnilまたは空文字の場合、ここで処理を中断
+                print("City name is empty or nil.")
+                return
+                
+            }
+            weatherManager.fetchWeather(cityName)
+        }
+        
+        // when keyboard return clicked
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            searchField.endEditing(true)    //dismiss keyboard
+            print(searchField.text!)
+            searchWeather()
+            return true
+        }
+        
+        // when textfield deselected
+        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+            if textField.text != "" {
+                return true
+            } else {
+                textField.placeholder = "Type something here"
+                return false
+            }
+        }
+        
+        
+        // When textfield stop editing (keyboard dismissed)
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            // Optionally clear textField after editing
+            // searchField.text = "" // Clear textField if necessary
+        }
+    }
+    
+}
+
+
+//MARK:- View update extension
+extension WeatherViewController: WeatherManagerDelegate {
+    //検索してきた結果を取得、更新
+    //ここで背景画像を変更する処理
+    func updateWeather(weatherModel: WeatherModel){
+        DispatchQueue.main.sync {
+            temperatureLabel.text = weatherModel.temperatureString
+            cityLabel.text = weatherModel.cityName
+            self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
+            
+            
+            self.backgroundImageView.image = UIImage(systemName: "dark_background")
+            
+            //入力された都市名に基づいて背景画像を変更
+            changeBackgroundImage(for:weatherModel.cityName)
+            
+        }
+    }
+    
+    func failedWithError(error: Error){
+        print(error)
+    }
+}
+
 
 // MARK:- 背景画像変更メソッド追加
 extension WeatherViewController {
@@ -229,3 +232,5 @@ extension WeatherViewController {
     }
     
 }
+
+

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherModel {
+struct WeatherModel: Decodable {
     let cityName: String
     let conditionId: Int
     let temperature: Double
@@ -41,5 +41,6 @@ struct WeatherModel {
             return "cloud"
         }
     }
+  
     
 }

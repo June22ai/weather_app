@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9dD-yj-e9s">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="kWX-h1-VLT">
+                                <rect key="frame" x="0.0" y="-58" width="414" height="896"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wz9-jj-JbA">
-                                <rect key="frame" x="20" y="41" width="374" height="814"/>
+                                <rect key="frame" x="20" y="41" width="374" height="721"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tgv-vV-Mot">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -86,17 +86,39 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
-                                        <rect key="frame" x="98" y="309.5" width="276" height="414"/>
-                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWP-r8-Jsy">
-                                        <rect key="frame" x="276" y="733.5" width="98" height="36"/>
+                                        <rect key="frame" x="276" y="309.5" width="98" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKj-xp-WRP" userLabel="Dad Joke">
-                                        <rect key="frame" x="278.5" y="355.5" width="95.5" height="75"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="V52-YC-AUA">
+                                        <rect key="frame" x="132" y="355.5" width="242" height="34.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                                <rect key="frame" x="0.0" y="0.0" width="111" height="34.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
+                                                <connections>
+                                                    <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jWg-tR-zqE"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDz-0A-gZN" userLabel="お気に入り">
+                                                <rect key="frame" x="131" y="0.0" width="111" height="34.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="お気に入り"/>
+                                                <connections>
+                                                    <action selector="favoriteButtun:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lfO-u9-NBb"/>
+                                                    <segue destination="EtE-D9-8Cf" kind="show" id="H3A-Zp-rde"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
+                                        <rect key="frame" x="324" y="400" width="50" height="124.5"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKj-xp-WRP" userLabel="Dad Joke">
+                                        <rect key="frame" x="278.5" y="534.5" width="95.5" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="ViC-eJ-hTA"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="goM-eW-nZ1"/>
@@ -107,8 +129,8 @@
                                             <action selector="fetchDadJoke" destination="BYZ-38-t0r" eventType="touchUpInside" id="O6l-sQ-FoM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olF-LN-gFJ">
-                                        <rect key="frame" x="324" y="440.5" width="50" height="41.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olF-LN-gFJ">
+                                        <rect key="frame" x="324" y="619.5" width="50" height="41.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="41.5" id="1pQ-j8-OV2"/>
                                         </constraints>
@@ -116,21 +138,9 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8Fw">
-                                        <rect key="frame" x="134" y="492" width="240" height="322"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-bh-8FW">
+                                        <rect key="frame" x="134" y="671" width="240" height="50"/>
                                     </view>
-
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
-                                        <rect key="frame" x="280.5" y="779.5" width="93.5" height="34.5"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="gray" title="次の画面"/>
-                                        <connections>
-                                            <action selector="NextPage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gld-g4-Dlf"/>
-                                            <segue destination="EtE-D9-8Cf" kind="presentation" identifier="showFavoreteScreen" id="6Nl-nd-YUB"/>
-                                        </connections>
-                                    </button>
-
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Tgv-vV-Mot" secondAttribute="trailing" id="Xxe-YD-sFY"/>
@@ -151,6 +161,8 @@
                             <constraint firstItem="can-OR-uJU" firstAttribute="bottom" secondItem="Wz9-jj-JbA" secondAttribute="bottom" id="xZf-D7-jKn"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="fun-Ug-zkX"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="kWX-h1-VLT" id="bEY-k3-sjN"/>
                         <outlet property="cityLabel" destination="CWP-r8-Jsy" id="8cQ-3l-ufV"/>
@@ -162,10 +174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-
-            <point key="canvasLocation" x="137.68115942028987" y="117.85714285714285"/>
-
-            <point key="canvasLocation" x="-136.23188405797103" y="298.66071428571428"/>
+            <point key="canvasLocation" x="4426.0869565217399" y="-197.54464285714286"/>
         </scene>
         <!--Favorete View Controller-->
         <scene sceneID="KiF-0Q-qdB">
@@ -176,9 +185,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1e3-G9-9sH" userLabel="Table View" customClass="UITableView">
-                                <rect key="frame" x="27" y="58" width="359" height="614"/>
+                                <rect key="frame" x="0.0" y="58" width="414" height="618"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cell"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1D-yG-fTD">
                                 <rect key="frame" x="138" y="707" width="138" height="42"/>
@@ -187,6 +197,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="戻る"/>
                                 <connections>
                                     <action selector="GoBack:" destination="EtE-D9-8Cf" eventType="touchUpInside" id="WNd-h6-xHO"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="L0P-Ye-lA4"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -200,15 +211,35 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kwo-w9-jhh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-933.33333333333337" y="95.758928571428569"/>
-
+            <point key="canvasLocation" x="-23.188405797101453" y="95.758928571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dK0-3a-hqm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9dD-yj-e9s" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UUh-82-rcB">
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="K4t-n6-AUv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UJZ-WE-Fzm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3515.9420289855075" y="-197.54464285714286"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="K4t-n6-AUv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="background" width="662" height="662"/>
-        <image name="cloud.rain" catalog="system" width="32" height="32"/>
-        <image name="location.circle.fill" catalog="system" width="32" height="32"/>
-        <image name="magnifyingglass" catalog="system" width="32" height="32"/>
+        <image name="cloud.rain" catalog="system" width="126" height="128"/>
+        <image name="location.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
