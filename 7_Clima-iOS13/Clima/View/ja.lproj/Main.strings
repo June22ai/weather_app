@@ -1,0 +1,39 @@
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "2eh-wL-W34"; */
+"2eh-wL-W34.placeholder" = "Search";
+
+/* Class = "UIButton"; configuration.title = "お気に入り"; ObjectID = "CDz-0A-gZN"; */
+"CDz-0A-gZN.configuration.title" = "お気に入り";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CDz-0A-gZN"; */
+"CDz-0A-gZN.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "London"; ObjectID = "CWP-r8-Jsy"; */
+"CWP-r8-Jsy.text" = "London";
+
+/* Class = "UILabel"; text = "C"; ObjectID = "MHH-vY-Mrb"; */
+"MHH-vY-Mrb.text" = "C";
+
+/* Class = "UILabel"; text = "°"; ObjectID = "N7Y-Fj-S2q"; */
+"N7Y-Fj-S2q.text" = "°";
+
+/* Class = "UIButton"; configuration.title = "Dad Joke"; ObjectID = "OKj-xp-WRP"; */
+"OKj-xp-WRP.configuration.title" = "Dad Joke";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "OKj-xp-WRP"; */
+"OKj-xp-WRP.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "戻る"; ObjectID = "m1D-yG-fTD"; */
+"m1D-yG-fTD.configuration.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "m1D-yG-fTD"; */
+"m1D-yG-fTD.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "次の画面"; ObjectID = "vtR-ex-sE3"; */
+"vtR-ex-sE3.configuration.title" = "次の画面";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vtR-ex-sE3"; */
+"vtR-ex-sE3.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "21"; ObjectID = "w9o-tW-03D"; */
+"w9o-tW-03D.text" = "21";

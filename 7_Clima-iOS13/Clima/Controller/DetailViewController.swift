@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import RswiftResources
 
 class DetailViewController: UIViewController, WeatherManagerDelegate {
     

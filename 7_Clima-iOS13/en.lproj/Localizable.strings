@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  Clima
+
+  Created by Ai Tanigwa on 2025/03/15.
+  Copyright © 2025 App Brewery. All rights reserved.
+*/
+/* テスト SampleView*/
+"greeting" = "おはようございます！";
+//"greeting" = "Hello, world!"; 
+
+/* WeatherViewControllerで使う文字列 */
+
+/* エラーメッセージ */
+"weatherErrorMessage" = "天気情報の取得に失敗しました";
+
+/* 都市名 */
+"cityTokyo" = "東京";
+"cityEnglishTokyo" = "Tokyo";
+
+/* 他の都市名 */
+"cityBerlin" = "ベルリン";
+"cityEnglishBerlin" = "Berlin";
+"cityAmsterdam" = "アムステルダム";
+"cityEnglishAmsterdam" = "Amsterdam";
+
+/* 天気アイコンの条件 */
+"conditionCloudBolt" = "cloud.bolt";
+"conditionCloudDrizzle" = "cloud.drizzle";
+"conditionCloudRain" = "cloud.rain";
+"conditionCloudSnow" = "cloud.snow";
+"conditionCloudFog" = "cloud.fog";
+"conditionSunMax" = "sun.max";
+"conditionCloud" = "cloud";
+
+/* 背景画像 */
+"backgroundTokyo" = "tokyo_background";
+"background" = "background";
+
+/* APIのベースURL */
+"weatherAPIBaseURL" = "https://api.openweathermap.org/data/2.5/weather";
+
+/* APIキー */
+"apiKey" = "YOUR_API_KEY";
+
+
+

@@ -94,7 +94,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="V52-YC-AUA">
                                         <rect key="frame" x="132" y="355.5" width="242" height="34.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3" userLabel="次の画面">
                                                 <rect key="frame" x="0.0" y="0.0" width="111" height="34.5"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
                                                 <state key="normal" title="Button"/>

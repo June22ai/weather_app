@@ -8,10 +8,10 @@
 
 import UIKit
 import CoreLocation
+import SwiftUI
+import RswiftResources
 
 class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate  {
-    
-    
     
     
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -20,7 +20,6 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var jokeLabel: UILabel!
-
     
     
     //MARK: Properties
@@ -59,20 +58,17 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
     }
     
-    //MARK:- 次の画面へ遷移するためのボタンアクション
+        //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showFavoreteScreen"{
-            
+            performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
         }
-
-    }
-        
+    
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showFavoreteScreen"{
+            }
+        }
+    
     //MARK:- TextField extension
-
     @IBAction func searchBtnClicked(_ sender: UIButton) {
         
         searchField.endEditing(true)    //dismiss keyboard
@@ -93,7 +89,8 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     // MARK: - Fetch Weather by City Name
     func fetchWeatherByCityName(_ cityName: String) {
         let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+        //let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+        let urlString = "\(R.string.localizable.weatherAPIBaseURL)\(encodedCityName)&appid=\(R.string.localizable.apiKey)&units=metric"
         
         apiService.fetchData(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
             switch result {
@@ -109,7 +106,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     // MARK: - Fetch Weather by Coordinates
     func fetchWeatherByCoordinates(lat: Double, lon: Double) {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&lat=\(lat)&lon=\(lon)"
+        
+        let urlString = "\(R.string.localizable.weatherAPIBaseURL)lat=\(lat)&lon=\(lon)&appid=\(R.string.localizable.apiKey)&units=metric"
+        
         
         apiService.fetchData(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
             switch result {
@@ -136,27 +135,25 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     func changeBackgroundImage(for cityName: String) {
         //入力された都市名に基づいて背景画像を変更
         if cityName.lowercased() == "tokyo" {
-            backgroundImageView.image = UIImage(named: "tokyo_background")
+            backgroundImageView.image = UIImage(named: R.image.tokyo_background.name)
         } else {
-            backgroundImageView.image = UIImage(named: "background")
-            // 他の都市名が入力された時の背景
+            backgroundImageView.image = UIImage(named: R.image.background.name)
         }
+        
     }
     
-    
     // MARK:- DadJokeメソッド追加
-    
     @IBAction func fetchDadJoke() {
+    // ランダムなジョークを取得するためのURL
+    //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
         
-        // ランダムなジョークを取得するためのURL
         guard let url = URL(string: "https://icanhazdadjoke.com/") else {
-            print("Invalid URL")
             return
         }
         
-        
         // ヘッダーを設定してリクエストを作成
         let headers = ["Accept": "application/json"]
+        
         // APIServiceを使ってリクエストを送信
         APIService.request(url: url, headers: headers) { (result: Result<JokeResponse, Error>) in
             switch result {
@@ -166,14 +163,17 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
                 }
             case .failure(let error):
                 print("Error fetching joke: \(error.localizedDescription)")
+                
             }
         }
     }
+    
     // ジョークをUIに表示
     func displayJoke(_ joke: String) {
         jokeLabel.text = joke
     }
 }
+
 
 // MARK: - WeatherManagerDelegate
 extension WeatherViewController: UITextFieldDelegate {
@@ -181,5 +181,26 @@ extension WeatherViewController: UITextFieldDelegate {
         searchField.endEditing(true)
         searchWeather()
         return true
+    }
+}
+// MARK: - test
+struct SampleView: View {
+    var body: some View {
+        VStack {
+            Text(R.string.localizable.greeting())  // 文字列
+                .font(.largeTitle)
+                .foregroundColor(Color(R.color.primary))  // 色
+            
+            Image(R.image.icon)  // 画像
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200)
+        }
+    }
+}
+
+struct SampleView_Previews: PreviewProvider {
+    static var previews: some View {
+        SampleView()
     }
 }
