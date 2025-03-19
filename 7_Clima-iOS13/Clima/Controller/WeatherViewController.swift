@@ -20,6 +20,10 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var jokeLabel: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var dadJokeButton: UIButton!
+    
     
     
     //MARK: Properties
@@ -34,7 +38,13 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         //weatherManager.delegate = self
         searchField.delegate = self
         
+        // ボタンにローカライズされたタイトルを設定
+        nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
+        favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
+        dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        
     }
+    
     @IBAction func locationButtonClicked(_ sender: UIButton) {
         // Get permission
         locationManager.requestWhenInUseAuthorization()

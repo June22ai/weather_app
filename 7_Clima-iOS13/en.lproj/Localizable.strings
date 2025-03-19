@@ -44,4 +44,9 @@
 "apiKey" = "YOUR_API_KEY";
 
 
+/* Button名称*/
 
+"next_screen" = "次の画面";
+"favorite" = "お気に入り";
+"dad_joke" = "Dad Joke";
+"back" = "戻る";
