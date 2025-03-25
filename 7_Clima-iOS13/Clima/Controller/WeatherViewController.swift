@@ -8,10 +8,10 @@
 
 import UIKit
 import CoreLocation
+import SwiftUI
+import RswiftResources
 
 class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate  {
-    
-    
     
     
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -20,10 +20,14 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var jokeLabel: UILabel!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var dadJokeButton: UIButton!
     
     
     
     //MARK: Properties
+    var apiService = APIService() // APIService のインスタンスを作成
     var weatherManager = WeatherDataManager()
     let locationManager = CLLocationManager()
     
@@ -34,7 +38,13 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         //weatherManager.delegate = self
         searchField.delegate = self
         
+        // ボタンにローカライズされたタイトルを設定
+        nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
+        favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
+        dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        
     }
+    
     @IBAction func locationButtonClicked(_ sender: UIButton) {
         // Get permission
         locationManager.requestWhenInUseAuthorization()
@@ -58,179 +68,154 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
     }
     
-    //MARK:- 次の画面へ遷移するためのボタンアクション
+        //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showFavoreteScreen"{
-            
+            performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
         }
-    }
     
-}
-
-//MARK:- TextField extension
-extension WeatherViewController: UITextFieldDelegate {
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showFavoreteScreen"{
+            }
+        }
     
+    //MARK:- TextField extension
     @IBAction func searchBtnClicked(_ sender: UIButton) {
         
         searchField.endEditing(true)    //dismiss keyboard
-        print(searchField.text!)
         
         searchWeather()
     }
     
-    func searchWeather(){
-        if let cityName = searchField.text{
-            weatherManager.fetchWeather(cityName)
+    
+    // MARK: - Search Weather Method
+    func searchWeather() {
+        guard let cityName = searchField.text, !cityName.isEmpty else {
+            print("City name is empty or nil.")
+            return
+        }
+        fetchWeatherByCityName(cityName)
+    }
+    
+    // MARK: - Fetch Weather by City Name
+    func fetchWeatherByCityName(_ cityName: String) {
+        let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
+        //let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+        let urlString = "\(R.string.localizable.weatherAPIBaseURL)\(encodedCityName)&appid=\(R.string.localizable.apiKey)&units=metric"
+        
+        // APIService.request メソッドを使用してデータを取得
+        APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
             
-            self.searchField.endEditing(true)    //dismiss keyboard
-            print(self.searchField.text!)
-            
-            self.searchWeather() //searchWeather()メソッドを呼び出す
-        }
-        
-        
-        func searchWeather() {
-            guard let cityName = searchField.text, !cityName.isEmpty else {
-                //cityNameがnilまたは空文字の場合、ここで処理を中断
-                print("City name is empty or nil.")
-                return
-                
-            }
-            weatherManager.fetchWeather(cityName)
-        }
-        
-        // when keyboard return clicked
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            searchField.endEditing(true)    //dismiss keyboard
-            print(searchField.text!)
-            searchWeather()
-            return true
-        }
-        
-        // when textfield deselected
-        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-            if textField.text != "" {
-                return true
-            } else {
-                textField.placeholder = "Type something here"
-                return false
+            switch result {
+            case .success(let weatherModel):
+                DispatchQueue.main.async {
+                    self?.updateWeather(weatherModel)
+                }
+            case .failure(let error):
+                print("Error fetching weather: \(error)")
             }
         }
+    }
+    
+    // MARK: - Fetch Weather by Coordinates
+    func fetchWeatherByCoordinates(lat: Double, lon: Double) {
         
+        let urlString = "\(R.string.localizable.weatherAPIBaseURL)lat=\(lat)&lon=\(lon)&appid=\(R.string.localizable.apiKey)&units=metric"
         
-        // When textfield stop editing (keyboard dismissed)
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            // Optionally clear textField after editing
-            // searchField.text = "" // Clear textField if necessary
+        // APIService.request メソッドを使用してデータを取得
+        APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
+           
+            switch result {
+            case .success(let weatherModel):
+                DispatchQueue.main.async {
+                    self?.updateWeather(weatherModel)
+                }
+            case .failure(let error):
+                print("Error fetching weather: \(error)")
+            }
         }
     }
     
-}
-
-
-//MARK:- View update extension
-extension WeatherViewController: WeatherManagerDelegate {
-    //検索してきた結果を取得、更新
-    //ここで背景画像を変更する処理
-    func updateWeather(weatherModel: WeatherModel){
-        DispatchQueue.main.sync {
-            temperatureLabel.text = weatherModel.temperatureString
-            cityLabel.text = weatherModel.cityName
-            self.conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
-            
-            
-            self.backgroundImageView.image = UIImage(systemName: "dark_background")
-            
-            //入力された都市名に基づいて背景画像を変更
-            changeBackgroundImage(for:weatherModel.cityName)
-            
-        }
+    // MARK: - Update Weather UI
+    func updateWeather(_ weatherModel: WeatherModel) {
+        temperatureLabel.text = weatherModel.temperatureString
+        cityLabel.text = weatherModel.cityName
+        conditionImageView.image = UIImage(systemName: weatherModel.conditionName)
+        backgroundImageView.image = UIImage(systemName: "dark_background")
+        changeBackgroundImage(for: weatherModel.cityName)
     }
     
-    func failedWithError(error: Error){
-        print(error)
-    }
-}
-
-
-// MARK:- 背景画像変更メソッド追加
-extension WeatherViewController {
-    
+    // MARK: - Change Background Image背景画像変更メソッド追加
     func changeBackgroundImage(for cityName: String) {
         //入力された都市名に基づいて背景画像を変更
         if cityName.lowercased() == "tokyo" {
-            self.backgroundImageView.image = UIImage(named: "tokyo_background")
+            backgroundImageView.image = UIImage(named: R.image.tokyo_background.name)
         } else {
-            self.backgroundImageView.image = UIImage(named: "background")
-            // 他の都市名が入力された時の背景
+            backgroundImageView.image = UIImage(named: R.image.background.name)
         }
-    }
-}
-// MARK:- DadJokeメソッド追加
-extension WeatherViewController {
-    
-    @IBAction func fetchDadJoke() {
         
-        // ランダムなジョークを取得するためのURL
+    }
+    
+    // MARK:- DadJokeメソッド追加
+    @IBAction func fetchDadJoke() {
+    // ランダムなジョークを取得するためのURL
+    //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
+        
         guard let url = URL(string: "https://icanhazdadjoke.com/") else {
-            print("Invalid URL")
             return
         }
         
-        // リクエストの作成
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Accept")  // JSON形式でレスポンスを受け取る
-        request.httpMethod = "GET"  // GETリクエスト
+        // ヘッダーを設定してリクエストを作成
+        let headers = ["Accept": "application/json"]
+  
         
-        // APIリクエストを実行
-        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
-            // エラーチェック
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-            
-            // HTTPレスポンスコードが200（成功）か確認
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                
-                // データが存在する場合はJSONに変換
-                if let data = data {
-                    do {
-                        // JSONデータを辞書型に変換
-                        let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
-                        
-                        // 取得したジョークの内容を表示
-                        if let jsonDict = jsonResponse as? [String: Any],
-                           let joke = jsonDict["joke"] as? String {
-                            // UI更新はメインスレッドで行う
-                            DispatchQueue.main.async {
-                                // ジョークを画面に表示する（例: ラベルにセット）
-                                print("Random Joke: \(joke)") // コンソールに表示
-                                self?.displayJoke(joke) // 表示するためのメソッド呼び出し
-                            }
-                        }
-                    } catch {
-                        print("Error parsing JSON: \(error.localizedDescription)")
-                    }
+        // APIServiceを使ってリクエストを送信
+        APIService.request(urlString: url.absoluteString, headers: headers) { (result: Result<JokeResponse, APIError>) in
+
+            switch result {
+            case .success(let jokeResponse):
+                DispatchQueue.main.async {
+                    self.displayJoke(jokeResponse.joke)
                 }
-            } else {
-                print("Failed to fetch joke: \(String(describing: response))")
+            case .failure(let error):
+                print("Error fetching joke: \(error.localizedDescription)")
+                
             }
         }
-        
-        // タスクを実行
-        task.resume()
-    }
-    // ジョークを表示するためのメソッド
-    func displayJoke(_ joke: String) {
-        // ここでUILabelにジョークを表示
-        jokeLabel.text = joke
     }
     
+    // ジョークをUIに表示
+    func displayJoke(_ joke: String) {
+        jokeLabel.text = joke
+    }
 }
 
 
+// MARK: - WeatherManagerDelegate
+extension WeatherViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchField.endEditing(true)
+        searchWeather()
+        return true
+    }
+}
+// MARK: - test
+struct SampleView: View {
+    var body: some View {
+        VStack {
+            Text(R.string.localizable.greeting())  // 文字列
+                .font(.largeTitle)
+                .foregroundColor(Color(R.color.primary))  // 色
+            
+            Image(R.image.icon)  // 画像
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200)
+        }
+    }
+}
+
+struct SampleView_Previews: PreviewProvider {
+    static var previews: some View {
+        SampleView()
+    }
+}

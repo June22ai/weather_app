@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import RswiftResources
 
 class DetailViewController: UIViewController, WeatherManagerDelegate {
     
@@ -96,38 +97,34 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
         }
     }
     
-    //WeatherModel に Decodable プロトコルを適用。Decodable に準拠することで、JSONDecoder がデータを自動的にデコードできるようになる
+    
     func fetchWeather(cityName: String) {
-    //
+        // 入力された都市名をURLエンコードして、安全なURLに変換
         let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
+        // OpenWeatherMap APIのURL文字列を作成
         let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
-
-        if let url = URL(string: urlString) {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
+        
+        // URLオブジェクトを作成し、URLが正しいかチェック
+        if URL(string: urlString) != nil {
+        //if let url = URL(string: urlString) {
+            // APIServiceのリクエストメソッドを呼び出して、天気情報を取得
+            // requestメソッドを使用する際、URL文字列とレスポンスを受け取るためのクロージャを渡す
+                APIService.request(urlString: urlString) { (result: Result<WeatherModel, APIError>) in
+            
+                // 結果が返ってきたら、成功か失敗かを判定して処理を分ける
+                switch result {
+                case .success(let weatherModel):
+                    // 成功した場合、UIの更新をメインスレッドで実行
+                    DispatchQueue.main.async {
+                        self.updateWeather(weatherModel: weatherModel)
+                    }
+                case .failure(let error):
+                    // 失敗した場合、エラーメッセージをUIの更新をメインスレッドで実行
                     DispatchQueue.main.async {
                         self.failedWithError(error: error)
                     }
-                    return
-                }
-                
-                if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let weatherData = try decoder.decode(WeatherModel.self, from: data)
-                        DispatchQueue.main.async {
-                            self.updateWeather(weatherModel: weatherData)
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.failedWithError(error: error)
-                        }
-                    }
                 }
             }
-            task.resume()
         }
     }
-    
-    
 }

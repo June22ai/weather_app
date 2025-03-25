@@ -94,7 +94,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="V52-YC-AUA">
                                         <rect key="frame" x="132" y="355.5" width="242" height="34.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-ex-sE3" userLabel="次の画面">
                                                 <rect key="frame" x="0.0" y="0.0" width="111" height="34.5"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="showFavoreteScreen"/>
                                                 <state key="normal" title="Button"/>
@@ -167,7 +167,10 @@
                         <outlet property="backgroundImageView" destination="kWX-h1-VLT" id="bEY-k3-sjN"/>
                         <outlet property="cityLabel" destination="CWP-r8-Jsy" id="8cQ-3l-ufV"/>
                         <outlet property="conditionImageView" destination="mYn-vV-MBC" id="fxe-Om-W2I"/>
+                        <outlet property="dadJokeButton" destination="OKj-xp-WRP" id="TPw-o0-wqu"/>
+                        <outlet property="favoriteButton" destination="CDz-0A-gZN" id="72s-AJ-3aq"/>
                         <outlet property="jokeLabel" destination="olF-LN-gFJ" id="WaW-a7-XUg"/>
+                        <outlet property="nextButton" destination="vtR-ex-sE3" id="rAi-Ga-db1"/>
                         <outlet property="searchField" destination="2eh-wL-W34" id="Mdn-d0-ZRy"/>
                         <outlet property="temperatureLabel" destination="w9o-tW-03D" id="mF4-vV-JxK"/>
                     </connections>
@@ -206,6 +209,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="OXD-7L-4Go"/>
                     <connections>
+                        <outlet property="backButton" destination="m1D-yG-fTD" id="0s0-xk-eeb"/>
                         <outlet property="tableView" destination="1e3-G9-9sH" id="7z2-q3-aP6"/>
                     </connections>
                 </viewController>

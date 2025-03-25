@@ -17,11 +17,15 @@ struct Area {
 
 class FavoreteViewController: UIViewController {
     
+    @IBOutlet weak var backButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "都市一覧"
         
+        backButton.setTitle(R.string.localizable.back(), for: .normal)
     }
     
     //前画面から遷移した時
