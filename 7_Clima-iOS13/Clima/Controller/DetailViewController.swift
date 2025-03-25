@@ -105,9 +105,12 @@ class DetailViewController: UIViewController, WeatherManagerDelegate {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
         
         // URLオブジェクトを作成し、URLが正しいかチェック
-        if let url = URL(string: urlString) {
+        if URL(string: urlString) != nil {
+        //if let url = URL(string: urlString) {
             // APIServiceのリクエストメソッドを呼び出して、天気情報を取得
-            APIService.request(url: url) { (result: Result<WeatherModel, Error>) in
+            // requestメソッドを使用する際、URL文字列とレスポンスを受け取るためのクロージャを渡す
+                APIService.request(urlString: urlString) { (result: Result<WeatherModel, APIError>) in
+            
                 // 結果が返ってきたら、成功か失敗かを判定して処理を分ける
                 switch result {
                 case .success(let weatherModel):

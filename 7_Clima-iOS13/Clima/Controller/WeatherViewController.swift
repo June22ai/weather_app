@@ -102,7 +102,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         //let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
         let urlString = "\(R.string.localizable.weatherAPIBaseURL)\(encodedCityName)&appid=\(R.string.localizable.apiKey)&units=metric"
         
-        apiService.fetchData(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
+        // APIService.request メソッドを使用してデータを取得
+        APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
+            
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -119,8 +121,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         let urlString = "\(R.string.localizable.weatherAPIBaseURL)lat=\(lat)&lon=\(lon)&appid=\(R.string.localizable.apiKey)&units=metric"
         
-        
-        apiService.fetchData(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
+        // APIService.request メソッドを使用してデータを取得
+        APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
+           
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -163,9 +166,11 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         // ヘッダーを設定してリクエストを作成
         let headers = ["Accept": "application/json"]
+  
         
         // APIServiceを使ってリクエストを送信
-        APIService.request(url: url, headers: headers) { (result: Result<JokeResponse, Error>) in
+        APIService.request(urlString: url.absoluteString, headers: headers) { (result: Result<JokeResponse, APIError>) in
+
             switch result {
             case .success(let jokeResponse):
                 DispatchQueue.main.async {
