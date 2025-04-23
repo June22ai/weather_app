@@ -10,8 +10,14 @@ import UIKit
 import CoreLocation
 import SwiftUI
 import RswiftResources
+import FirebaseAuthUI
+import FirebaseGoogleAuthUI
+import FirebaseAuth
+import FirebaseDatabase
+import UserNotifications
 
-class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate  {
+
+class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate,FUIAuthDelegate  {
     
     
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -23,25 +29,179 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var dadJokeButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton! // 追加: ログアウト用のボタン
+    @IBOutlet weak var targetIdText: UITextField!   //接続先ユーザーIDの入力ボックス
+    @IBOutlet weak var connectButton: UIButton!     // 接続ボタン
     
+    @IBOutlet weak var stateLabel: UILabel!     // 接続状態ラベル
+    @IBOutlet weak var userIdLabel: UILabel!    // 接続されたユーザーIDラベル
+    @IBOutlet weak var nameText: UITextField!   // DBへリアルタイムに更新する名前の入力ボックス
+    @IBOutlet weak var nameLabel: UILabel!
+    // DBからリアルタイムに参照された名前ラベル
     
+    @IBOutlet weak var deleteButton: UIButton!  // ユーザーの削除ボタン
     
     //MARK: Properties
     var apiService = APIService() // APIService のインスタンスを作成
     var weatherManager = WeatherDataManager()
     let locationManager = CLLocationManager()
+    var user: DatabaseReference!    // 参照先DB（Userノード）※UserIdの親ノード
+    var userId: DatabaseReference!  // 参照先DB（指定したUserIdノード）
+    
+    
+    // 「接続」ボタンが押されたら呼ばれる
+    @IBAction func userConnect(_ sender: AnyObject) {
+        // ターゲットのユーザーIDから参照先DBを取得する
+        self.userId = self.user.child(self.targetIdText.text!)
+        let name: DatabaseReference = self.userId.child("name")
+        // リアルタイムに更新するDBのノードと入力ボックス紐付ける
+        name.observe(.value) { (snapshot: DataSnapshot) in
+            if !snapshot.exists() { // ノードに値がなければ追加する
+                name.setValue("unknown")
+            }
+            self.nameText.text = (snapshot.value! as AnyObject).description
+            self.nameLabel.text = self.nameText.text
+        }
+        self.userIdLabel.text = self.targetIdText.text // 取得したユーザーIDをラベルに表示する
+        
+        // 入力ボックスと接続状態ラベルを接続状態にする
+        self.stateLabel.text = "########## 接続中 ##########"
+        self.nameText.isEnabled = true
+        self.deleteButton.isEnabled = true
+    }
+    
+    // 「削除」ボタンが押されたら呼ばれる
+    @IBAction func userDelete(_ sender: AnyObject) {
+        // 入力ボックスとラベル表示を未接続状態に戻す
+        self.userIdLabel.text = "---"
+        self.nameText.text = ""
+        self.nameLabel.text = "---"
+        self.stateLabel.text = "########## 未接続 ##########"
+        self.nameText.isEnabled = false
+        self.deleteButton.isEnabled = false
+        
+        // リアルタイムに更新されていたDBのノードと入力ボックス紐付けを解除する
+        let name: DatabaseReference = self.userId.child("name")
+        name.removeAllObservers()
+        self.userId.removeValue() // ここで対象のUserを削除する
+    }
+    
+    // DBへリアルタイムに更新する名前の入力ボックスの内容が変更される度に呼ばれる
+    
+    @IBAction func nameChanged(_ sender: AnyObject) {
+        
+        let data = ["name": self.nameText.text!]
+        self.userId.updateChildValues(data)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.user = Database.database().reference().child("User")
+        // 通知の許可リクエスト
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("✅ 通知の許可がされました")
+            } else {
+                print("❌ 通知が拒否されました")
+            }
+            
+        }
+    }
+    @IBAction func notifyButtonTapped(_ sender: UIButton) {
+        scheduleNotification()
+    }
+    
+    
+    func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "こんにちは！"
+        content.body = "これはローカル通知です📣"
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("⚠️ 通知エラー: \(error.localizedDescription)")
+            } else {
+                print("✅ 通知がスケジュールされました")
+            }
+        }
+        
+        // Firebaseの参照先を設定
+        self.user = Database.database().reference().child("user")
         
         locationManager.delegate = self
-        //weatherManager.delegate = self
         searchField.delegate = self
         
         // ボタンにローカライズされたタイトルを設定
         nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
         favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
         dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        // ログイン状態に応じてUIを更新
+        if let user = Auth.auth().currentUser {
+            // ユーザーがログインしている場合
+            print("Logged in as \(user.displayName ?? "No Name")")
+            // ログイン後のUI更新（例: ログアウトボタンの表示）
+            logoutButton.isHidden = false
+        } else {
+            // ユーザーがログインしていない場合
+            print("No user logged in.")
+            // ログインボタンの表示（必要なら）
+        }
+        
+        // 現在のユーザー情報を表示
+        if let user = Auth.auth().currentUser {
+            print("uid:", user.uid)
+            print("displayName:", user.displayName ?? "No Display Name")
+            print("photoURL:", user.photoURL?.absoluteString ?? "No Photo URL")
+        }
+    }
+    // 認証ボタン
+    @IBAction private func onAuthButton(_ sender: UIButton) {
+        // 認証
+        let authUI = FUIAuth.defaultAuthUI()!
+        authUI.delegate = self
+        let providers: [FUIAuthProvider] = [
+            FUIGoogleAuth(authUI: authUI)
+        ]
+        authUI.providers = providers
+        let authViewController = authUI.authViewController()
+        self.present(authViewController, animated: true)
+    }
+    
+    // 認証の結果取得時に呼ばれる
+    internal func authUI(_ authUI: FUIAuth,
+                         didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+        // 成功
+        if let user = authDataResult?.user {
+            // ユーザー情報の確認
+            print("uid:", user.uid)
+            print("displayName:", user.displayName ?? "")
+            print("photoURL:", user.photoURL ?? "")
+        }
+        // 失敗
+        if let error = error {
+            print("error:", error.localizedDescription)
+        }
+    }
+    // ログアウトボタン
+    @IBAction private func onLogoutButton(_ sender: UIButton) {
+        
+        do {
+            try Auth.auth().signOut()
+            print("Successfully signed out.")
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError.localizedDescription)
+        }
+        // ログアウト後に再度確認
+        if Auth.auth().currentUser == nil {
+            print("User is logged out.")
+        } else {
+            print("User is still logged in.")
+        }
         
     }
     
@@ -68,15 +228,15 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
     }
     
-        //MARK:- 次の画面へ遷移するためのボタンアクション
+    //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-            performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-        }
+        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+    }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "showFavoreteScreen"{
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFavoreteScreen"{
         }
+    }
     
     //MARK:- TextField extension
     @IBAction func searchBtnClicked(_ sender: UIButton) {
@@ -123,7 +283,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         // APIService.request メソッドを使用してデータを取得
         APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
-           
+            
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -157,8 +317,8 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     // MARK:- DadJokeメソッド追加
     @IBAction func fetchDadJoke() {
-    // ランダムなジョークを取得するためのURL
-    //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
+        // ランダムなジョークを取得するためのURL
+        //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
         
         guard let url = URL(string: "https://icanhazdadjoke.com/") else {
             return
@@ -166,11 +326,11 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         // ヘッダーを設定してリクエストを作成
         let headers = ["Accept": "application/json"]
-  
+        
         
         // APIServiceを使ってリクエストを送信
         APIService.request(urlString: url.absoluteString, headers: headers) { (result: Result<JokeResponse, APIError>) in
-
+            
             switch result {
             case .success(let jokeResponse):
                 DispatchQueue.main.async {
