@@ -13,15 +13,15 @@ import FirebaseDatabase
 
 class UserConnectionViewController: UIViewController {
     
-    @IBOutlet weak var userIdTextField: UITextField!
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet weak var connectionStatusLabel: UILabel!
-    @IBOutlet weak var currentUserIdLabel: UILabel!
-    @IBOutlet weak var currentNameTextField: UITextField!
-    @IBOutlet weak var currentNameLabel: UILabel!
-    @IBOutlet weak var currentAgeTextField: UITextField!
-    @IBOutlet weak var currentAgeLabel: UILabel!
-    @IBOutlet weak var deleteUserButton: UIButton!
+    @IBOutlet weak var targetIdText: UITextField!// 接続先ユーザーIDの入力ボックス
+    @IBOutlet weak var connectButton: UIButton!// 接続ボタン
+    @IBOutlet weak var stateLabel: UILabel!// 接続状態ラベル
+    @IBOutlet weak var userIdLabel: UILabel!// 接続されたユーザーIDラベル
+    @IBOutlet weak var nameText: UITextField!// DBへリアルタイムに更新する名前の入力ボックス
+    @IBOutlet weak var nameLabel: UILabel!// DBからリアルタイムに参照された名前ラベル
+    @IBOutlet weak var ageText: UITextField!// DBへリアルタイムに更新する年齢の入力ボックス
+    @IBOutlet weak var ageLabel: UILabel!// DBからリアルタイムに参照された年齢ラベル
+    @IBOutlet weak var deleteButton: UIButton!// ユーザーの削除ボタン
     
     var ref: DatabaseReference!
     
@@ -49,35 +49,44 @@ class UserConnectionViewController: UIViewController {
         ref = Database.database().reference()
         
         // 初期状態では接続されていない
-        connectionStatusLabel.text = "未接続"
-        currentUserIdLabel.text = "---"
-        currentNameLabel.text = "---"
-        currentAgeLabel.text = "---"
+        stateLabel.text = "未接続"
+        userIdLabel.text = "---"
+        nameLabel.text = "---"
+        ageLabel.text = "---"
     }
     
     // 接続ボタンを押した時の処理
     @IBAction func connectButtonTapped(_ sender: UIButton) {
-        guard let userId = userIdTextField.text, !userId.isEmpty else {
+        guard let userId = targetIdText.text, !userId.isEmpty else {
             print("ユーザーIDを入力してください。")
             return
         }
         
         // Firebase Realtime Database から接続
-        ref.child("User").child(userId).observeSingleEvent(of: .value) { snapshot in
-            if let userDict = snapshot.value as? [String: Any] {
-                self.currentUserId = userId
-                self.currentUserName = userDict["name"] as? String
-                self.currentUserAge = userDict["age"] as? Int
-                self.connectionStatusLabel.text = "接続済み"
-            } else {
-                self.connectionStatusLabel.text = "ユーザーIDが存在しません"
+        ref.child("User").child(userId).observeSingleEvent(of: .value) { snapshot, error in
+
+            if let error = error {
+                print("データ取得中にエラーが発生しました: \(error)")
+                return
+            }
+
+            // snapshotからデータを取り出す
+            if let value = snapshot.value as? [String: Any] {
+                // ここでvalueから名前や年齢を取り出してラベルに表示します
+                let userName = value["name"] as? String ?? "未設定"
+                let userAge = value["age"] as? Int ?? 0
+                
+                // ラベルにセット
+                self.nameLabel.text = userName
+                self.ageLabel.text = "\(userAge)"
             }
         }
-    }
+
+   }
     
     // 名前を変更した時の処理
     @IBAction func updateNameButtonTapped(_ sender: UIButton) {
-        guard let newName = currentNameTextField.text, !newName.isEmpty else {
+        guard let newName = nameText.text, !newName.isEmpty else {
             print("名前を入力してください。")
             return
         }
@@ -88,7 +97,7 @@ class UserConnectionViewController: UIViewController {
                 if let error = error {
                     print("名前の更新に失敗しました: \(error.localizedDescription)")
                 } else {
-                    self.currentNameLabel.text = newName
+                    self.nameLabel.text = newName
                     print("名前が更新されました。")
                 }
             }
@@ -97,7 +106,7 @@ class UserConnectionViewController: UIViewController {
     
     // 年齢を変更した時の処理
     @IBAction func updateAgeButtonTapped(_ sender: UIButton) {
-        guard let newAgeText = currentAgeTextField.text, let newAge = Int(newAgeText) else {
+        guard let newAgeText = ageText.text, let newAge = Int(newAgeText) else {
             print("年齢を正しく入力してください。")
             return
         }
@@ -108,7 +117,7 @@ class UserConnectionViewController: UIViewController {
                 if let error = error {
                     print("年齢の更新に失敗しました: \(error.localizedDescription)")
                 } else {
-                    self.currentAgeLabel.text = "\(newAge)"
+                    self.ageLabel.text = "\(newAge)"
                     print("年齢が更新されました。")
                 }
             }
@@ -125,10 +134,10 @@ class UserConnectionViewController: UIViewController {
                     self.currentUserId = nil
                     self.currentUserName = nil
                     self.currentUserAge = nil
-                    self.connectionStatusLabel.text = "########## 未接続 ##########"
-                    self.currentUserIdLabel.text = "---"
-                    self.currentNameLabel.text = "---"
-                    self.currentAgeLabel.text = "---"
+                    self.stateLabel.text = "########## 未接続 ##########"
+                    self.userIdLabel.text = "---"
+                    self.nameLabel.text = "---"
+                    self.ageLabel.text = "---"
                     print("ユーザーが削除されました。")
                 }
             }
@@ -138,8 +147,8 @@ class UserConnectionViewController: UIViewController {
     // UI 更新処理
     func updateUI() {
         guard let userId = currentUserId else { return }
-        currentUserIdLabel.text = userId
-        currentNameLabel.text = currentUserName ?? "---"
-        currentAgeLabel.text = currentUserAge != nil ? "\(currentUserAge!)" : "---"
+        userIdLabel.text = userId
+        nameLabel.text = currentUserName ?? "---"
+        ageLabel.text = currentUserAge != nil ? "\(currentUserAge!)" : "---"
     }
 }
