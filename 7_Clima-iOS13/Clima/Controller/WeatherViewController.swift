@@ -30,16 +30,10 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var dadJokeButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton! // 追加: ログアウト用のボタン
-    @IBOutlet weak var targetIdText: UITextField!   //接続先ユーザーIDの入力ボックス
-    @IBOutlet weak var connectButton: UIButton!     // 接続ボタン
+    @IBOutlet weak var targetIdText: UIButton!
+   
     
-    @IBOutlet weak var stateLabel: UILabel!     // 接続状態ラベル
-    @IBOutlet weak var userIdLabel: UILabel!    // 接続されたユーザーIDラベル
-    @IBOutlet weak var nameText: UITextField!   // DBへリアルタイムに更新する名前の入力ボックス
-    @IBOutlet weak var nameLabel: UILabel!
-    // DBからリアルタイムに参照された名前ラベル
-    
-    @IBOutlet weak var deleteButton: UIButton!  // ユーザーの削除ボタン
+   
     
     //MARK: Properties
     var apiService = APIService() // APIService のインスタンスを作成
@@ -47,52 +41,6 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     let locationManager = CLLocationManager()
     var user: DatabaseReference!    // 参照先DB（Userノード）※UserIdの親ノード
     var userId: DatabaseReference!  // 参照先DB（指定したUserIdノード）
-    
-    
-    // 「接続」ボタンが押されたら呼ばれる
-    @IBAction func userConnect(_ sender: AnyObject) {
-        // ターゲットのユーザーIDから参照先DBを取得する
-        self.userId = self.user.child(self.targetIdText.text!)
-        let name: DatabaseReference = self.userId.child("name")
-        // リアルタイムに更新するDBのノードと入力ボックス紐付ける
-        name.observe(.value) { (snapshot: DataSnapshot) in
-            if !snapshot.exists() { // ノードに値がなければ追加する
-                name.setValue("unknown")
-            }
-            self.nameText.text = (snapshot.value! as AnyObject).description
-            self.nameLabel.text = self.nameText.text
-        }
-        self.userIdLabel.text = self.targetIdText.text // 取得したユーザーIDをラベルに表示する
-        
-        // 入力ボックスと接続状態ラベルを接続状態にする
-        self.stateLabel.text = "########## 接続中 ##########"
-        self.nameText.isEnabled = true
-        self.deleteButton.isEnabled = true
-    }
-    
-    // 「削除」ボタンが押されたら呼ばれる
-    @IBAction func userDelete(_ sender: AnyObject) {
-        // 入力ボックスとラベル表示を未接続状態に戻す
-        self.userIdLabel.text = "---"
-        self.nameText.text = ""
-        self.nameLabel.text = "---"
-        self.stateLabel.text = "########## 未接続 ##########"
-        self.nameText.isEnabled = false
-        self.deleteButton.isEnabled = false
-        
-        // リアルタイムに更新されていたDBのノードと入力ボックス紐付けを解除する
-        let name: DatabaseReference = self.userId.child("name")
-        name.removeAllObservers()
-        self.userId.removeValue() // ここで対象のUserを削除する
-    }
-    
-    // DBへリアルタイムに更新する名前の入力ボックスの内容が変更される度に呼ばれる
-    
-    @IBAction func nameChanged(_ sender: AnyObject) {
-        
-        let data = ["name": self.nameText.text!]
-        self.userId.updateChildValues(data)
-    }
     
     
     override func viewDidLoad() {
@@ -159,51 +107,27 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
             print("photoURL:", user.photoURL?.absoluteString ?? "No Photo URL")
         }
     }
-    // 認証ボタン
-    @IBAction private func onAuthButton(_ sender: UIButton) {
-        // 認証
-        let authUI = FUIAuth.defaultAuthUI()!
-        authUI.delegate = self
-        let providers: [FUIAuthProvider] = [
-            FUIGoogleAuth(authUI: authUI)
-        ]
-        authUI.providers = providers
-        let authViewController = authUI.authViewController()
-        self.present(authViewController, animated: true)
-    }
     
-    // 認証の結果取得時に呼ばれる
-    internal func authUI(_ authUI: FUIAuth,
-                         didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        // 成功
-        if let user = authDataResult?.user {
-            // ユーザー情報の確認
-            print("uid:", user.uid)
-            print("displayName:", user.displayName ?? "")
-            print("photoURL:", user.photoURL ?? "")
-        }
-        // 失敗
-        if let error = error {
-            print("error:", error.localizedDescription)
-        }
-    }
-    // ログアウトボタン
+    // ログアウトボタンLoginViewControllerへ戻る
     @IBAction private func onLogoutButton(_ sender: UIButton) {
         
         do {
             try Auth.auth().signOut()
-            print("Successfully signed out.")
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError.localizedDescription)
+            print("ログアウト成功")
+            
+            // LoginViewController をルートに設定し直す
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let sceneDelegate = UIApplication.shared.connectedScenes
+                .first?.delegate as? SceneDelegate {
+                let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController")
+                sceneDelegate.window?.rootViewController = loginVC
+            }
+            
+        } catch let error {
+            print("ログアウトエラー: \(error.localizedDescription)")
         }
-        // ログアウト後に再度確認
-        if Auth.auth().currentUser == nil {
-            print("User is logged out.")
-        } else {
-            print("User is still logged in.")
-        }
-        
     }
+    
     
     @IBAction func locationButtonClicked(_ sender: UIButton) {
         // Get permission

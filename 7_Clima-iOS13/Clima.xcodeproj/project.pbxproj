@@ -11,6 +11,7 @@
 		2902D9F12D7D39C8002B9DB6 /* JokeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902D9F02D7D39C8002B9DB6 /* JokeResponse.swift */; };
 		2904B0F12D98EB6000ABA6B5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2904B0F02D98EB6000ABA6B5 /* FirebaseAnalytics */; };
 		290D28E12DA15C62006C0F2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290D28E02DA15C62006C0F2A /* GoogleService-Info.plist */; };
+		291001282DBDAA83002EC1F7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291001272DBDAA83002EC1F7 /* LoginViewController.swift */; };
 		292E6DC02D859E3200328993 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 292E6DBF2D859E3200328993 /* RswiftLibrary */; };
 		292E6DC72D85A32F00328993 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 292E6DC92D85A32F00328993 /* Localizable.strings */; };
 		29356B2C2DB48CC50024E984 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356B2B2DB48CC50024E984 /* ContentView.swift */; };
@@ -18,6 +19,7 @@
 		296251352D9D4C3400FE0FE8 /* FirebaseAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 296251342D9D4C3400FE0FE8 /* FirebaseAuthUI */; };
 		296251372D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 296251362D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI */; };
 		29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */; };
+		29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */; };
 		29B8018C2D4EF068007C8B4B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B8018A2D4EF068007C8B4B /* DetailViewController.swift */; };
 		29B8018D2D4EF068007C8B4B /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B8018B2D4EF068007C8B4B /* DetailView.xib */; };
 		29FAAF8A2DB264DD00FE06E2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 29FAAF892DB264DD00FE06E2 /* FirebaseDatabase */; };
@@ -62,6 +64,7 @@
 		2902D9EC2D7D1AA8002B9DB6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Clima/APIService.swift; sourceTree = SOURCE_ROOT; };
 		2902D9F02D7D39C8002B9DB6 /* JokeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JokeResponse.swift; sourceTree = "<group>"; };
 		290D28E02DA15C62006C0F2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		291001272DBDAA83002EC1F7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		292E6DC82D85A32F00328993 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		292E6DCA2D85A3AA00328993 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		292E6DCB2D85A3AA00328993 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -69,6 +72,7 @@
 		29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocalNotificationDemo.xcodeproj; path = ../../Desktop/w_app/weather_app/LocalNotificationDemo/LocalNotificationDemo.xcodeproj; sourceTree = "<group>"; };
 		29356B2B2DB48CC50024E984 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		29437D982D0709DE007401F0 /* FavoreteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoreteViewController.swift; sourceTree = "<group>"; };
+		29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConnectionViewController.swift; sourceTree = "<group>"; };
 		29B8018A2D4EF068007C8B4B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		29B8018B2D4EF068007C8B4B /* DetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
 		7D64259524473AE800F1DD90 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */,
 				29437D982D0709DE007401F0 /* FavoreteViewController.swift */,
 				29B8018A2D4EF068007C8B4B /* DetailViewController.swift */,
+				291001272DBDAA83002EC1F7 /* LoginViewController.swift */,
+				29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -312,7 +318,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291001282DBDAA83002EC1F7 /* LoginViewController.swift in Sources */,
 				7D64259624473AE800F1DD90 /* WeatherDataManager.swift in Sources */,
+				29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */,
 				29356B2C2DB48CC50024E984 /* ContentView.swift in Sources */,
 				29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */,
 				7D6425982451AEA500F1DD90 /* WeatherData.swift in Sources */,
