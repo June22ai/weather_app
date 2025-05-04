@@ -202,7 +202,7 @@
         <!--Favorete View Controller-->
         <scene sceneID="KiF-0Q-qdB">
             <objects>
-                <viewController storyboardIdentifier="FavoreteViewController" id="EtE-D9-8Cf" customClass="FavoreteViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoreteViewController" id="EtE-D9-8Cf" customClass="FavoreteViewController" customModule="Clima" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c7P-3d-jZF" userLabel="View">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -273,120 +273,121 @@
         <!--User Connection View Controller-->
         <scene sceneID="fQr-Ob-cm0">
             <objects>
-                <viewController storyboardIdentifier="UserConnectionViewController" id="WtI-8l-R9v" customClass="UserConnectionViewController" customModule="Clima" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserConnectionViewController" id="WtI-8l-R9v" customClass="UserConnectionViewController" customModule="Clima" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MQk-1W-YxO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="fuF-Rc-FOH">
-                                <rect key="frame" x="152" y="219" width="106" height="593"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="fuF-Rc-FOH">
+                                <rect key="frame" x="16" y="215" width="382" height="466"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMG-Sa-1v1" userLabel="State Label">
-                                        <rect key="frame" x="0.0" y="0.0" width="106" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;ユーザーID&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlD-ea-qbL">
-                                        <rect key="frame" x="0.0" y="29" width="106" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="29" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9fI-PJ-cjb">
-                                        <rect key="frame" x="0.0" y="78.5" width="106" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="78.5" width="382" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;名前&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1G-9J-KVT">
-                                        <rect key="frame" x="0.0" y="107.5" width="106" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="107.5" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ifB-Nn-Rde" userLabel="Name Text">
-                                        <rect key="frame" x="0.0" y="157" width="106" height="34"/>
+                                        <rect key="frame" x="0.0" y="157" width="382" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="nameChanged:" destination="WtI-8l-R9v" eventType="editingChanged" id="5Uz-ok-tR3"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g96-4X-DdN" userLabel="Name Label">
-                                        <rect key="frame" x="0.0" y="220" width="106" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="220" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7l-gv-dcl" userLabel="Update Name Button">
-                                        <rect key="frame" x="0.0" y="269.5" width="106" height="34.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="gray" title="名前変更"/>
-                                        <connections>
-                                            <action selector="updateNameButtonTapped:" destination="WtI-8l-R9v" eventType="touchUpInside" id="Ju7-Y9-EJH"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;年齢&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qz-lR-rGp">
-                                        <rect key="frame" x="0.0" y="333" width="106" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="269.5" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="okZ-zr-Ell" userLabel="Age Text">
-                                        <rect key="frame" x="0.0" y="382.5" width="106" height="34"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="okZ-zr-Ell" userLabel="Age Text">
+                                        <rect key="frame" x="0.0" y="319" width="382" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="ageChanged:" destination="WtI-8l-R9v" eventType="editingChanged" id="1Th-pD-eDo"/>
+                                        </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZaD-vh-FXD" userLabel="Age Label">
-                                        <rect key="frame" x="0.0" y="445.5" width="106" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZaD-vh-FXD" userLabel="Age Label">
+                                        <rect key="frame" x="0.0" y="382" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4e-fb-ouW" userLabel="Update Age Button">
-                                        <rect key="frame" x="0.0" y="495" width="106" height="34.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="gray" title="年齢変更"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3vH-hh-xHc">
-                                        <rect key="frame" x="0.0" y="558.5" width="106" height="34.5"/>
+                                        <rect key="frame" x="0.0" y="431.5" width="382" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="削除"/>
                                         <connections>
-                                            <action selector="deleteUserButtonTapped:" destination="WtI-8l-R9v" eventType="touchDown" id="mR1-21-gmF"/>
+                                            <action selector="userDelete:" destination="WtI-8l-R9v" eventType="touchUpInside" id="ix9-5R-qUg"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="BQ3-TH-geT">
-                                <rect key="frame" x="138" y="62" width="120" height="149"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="BQ3-TH-geT">
+                                <rect key="frame" x="138" y="62" width="138" height="143"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;ユーザーID&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBv-8f-Pgt" userLabel="&lt;ユーザID&gt;">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="&lt;ユーザーID&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBv-8f-Pgt" userLabel="&lt;ユーザID&gt;">
+                                        <rect key="frame" x="0.0" y="0.0" width="138" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gea-fd-hWa" userLabel="Target ID Text">
-                                        <rect key="frame" x="0.0" y="50.5" width="120" height="34"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gea-fd-hWa" userLabel="Target ID Text">
+                                        <rect key="frame" x="0.0" y="44.5" width="138" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHH-Io-AgJ" userLabel="接続">
-                                        <rect key="frame" x="0.0" y="114.5" width="120" height="34.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHH-Io-AgJ" userLabel="接続">
+                                        <rect key="frame" x="0.0" y="108.5" width="138" height="34.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="接続"/>
                                         <connections>
-                                            <action selector="connectButtonTapped:" destination="WtI-8l-R9v" eventType="touchDown" id="q73-Ni-dNt"/>
+                                            <action selector="userConnect:" destination="WtI-8l-R9v" eventType="touchUpInside" id="QbP-u1-MfA"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="EXk-Ws-0lY"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ExE-42-6fS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fuF-Rc-FOH" firstAttribute="centerY" secondItem="MQk-1W-YxO" secondAttribute="centerY" id="B9L-Ik-NOR"/>
+                            <constraint firstItem="ExE-42-6fS" firstAttribute="trailing" secondItem="fuF-Rc-FOH" secondAttribute="trailing" constant="16" id="By3-uk-ugO"/>
+                            <constraint firstItem="fuF-Rc-FOH" firstAttribute="top" secondItem="BQ3-TH-geT" secondAttribute="bottom" constant="10" id="NIm-M4-xDk"/>
+                            <constraint firstItem="BQ3-TH-geT" firstAttribute="leading" secondItem="ExE-42-6fS" secondAttribute="leading" constant="138" id="PZf-zR-P0O"/>
+                            <constraint firstItem="fuF-Rc-FOH" firstAttribute="leading" secondItem="ExE-42-6fS" secondAttribute="leading" constant="16" id="e8j-Qx-dhl"/>
+                            <constraint firstItem="fuF-Rc-FOH" firstAttribute="centerX" secondItem="MQk-1W-YxO" secondAttribute="centerX" id="fn9-hO-C5i"/>
+                            <constraint firstItem="fuF-Rc-FOH" firstAttribute="centerX" secondItem="MQk-1W-YxO" secondAttribute="centerX" id="lYU-Hy-Ql2"/>
+                            <constraint firstItem="BQ3-TH-geT" firstAttribute="top" secondItem="ExE-42-6fS" secondAttribute="top" constant="14" id="nkP-s1-T5q"/>
+                            <constraint firstItem="BQ3-TH-geT" firstAttribute="centerX" secondItem="MQk-1W-YxO" secondAttribute="centerX" id="rkf-0b-BiT"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="ageLabel" destination="ZaD-vh-FXD" id="1Rp-kz-eDU"/>
@@ -406,6 +407,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="H3A-Zp-rde"/>
         <segue reference="L0P-Ye-lA4"/>
     </inferredMetricsTieBreakers>
     <resources>

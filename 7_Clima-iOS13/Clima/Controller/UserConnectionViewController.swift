@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import Firebase
 
 class UserConnectionViewController: UIViewController {
     
@@ -23,132 +24,80 @@ class UserConnectionViewController: UIViewController {
     @IBOutlet weak var ageLabel: UILabel!// DBからリアルタイムに参照された年齢ラベル
     @IBOutlet weak var deleteButton: UIButton!// ユーザーの削除ボタン
     
-    var ref: DatabaseReference!
+    var user: DatabaseReference!    // 参照先DB（Userノード）※UserIdの親ノード
+    var userId: DatabaseReference!  // 参照先DB（指定したUserIdノード）
     
-    var currentUserId: String? {
-        didSet {
-            updateUI()
-        }
-    }
-    
-    var currentUserName: String? {
-        didSet {
-            updateUI()
-        }
-    }
-    
-    var currentUserAge: Int? {
-        didSet {
-            updateUI()
-        }
-    }
-    
+    // メインビューが読み込まれた後に呼ばれる
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ref = Database.database().reference()
-        
-        // 初期状態では接続されていない
-        stateLabel.text = "未接続"
-        userIdLabel.text = "---"
-        nameLabel.text = "---"
-        ageLabel.text = "---"
+        // Do any additional setup after loading the view.
+        self.user = Database.database().reference().child("user")
     }
     
-    // 接続ボタンを押した時の処理
-    @IBAction func connectButtonTapped(_ sender: UIButton) {
-        guard let userId = targetIdText.text, !userId.isEmpty else {
-            print("ユーザーIDを入力してください。")
-            return
-        }
+    // 「接続」ボタンが押されたら呼ばれる
+    @IBAction func userConnect(_ sender: AnyObject) {
+        // ターゲットのユーザーIDから参照先DBを取得する
+        self.userId = self.user.child(self.targetIdText.text!)
+        let name: DatabaseReference = self.userId.child("name")
+        let age: DatabaseReference = self.userId.child("age")
         
-        // Firebase Realtime Database から接続
-        ref.child("User").child(userId).observeSingleEvent(of: .value) { snapshot, error in
-
-            if let error = error {
-                print("データ取得中にエラーが発生しました: \(error)")
-                return
+        // リアルタイムに更新するDBのノードと入力ボックス紐付ける
+        name.observe(.value) { (snapshot: DataSnapshot) in
+            if !snapshot.exists() { // ノードに値がなければ追加する
+                name.setValue("unknown")
             }
-
-            // snapshotからデータを取り出す
-            if let value = snapshot.value as? [String: Any] {
-                // ここでvalueから名前や年齢を取り出してラベルに表示します
-                let userName = value["name"] as? String ?? "未設定"
-                let userAge = value["age"] as? Int ?? 0
-                
-                // ラベルにセット
-                self.nameLabel.text = userName
-                self.ageLabel.text = "\(userAge)"
+            self.nameText.text = (snapshot.value! as AnyObject).description
+            self.nameLabel.text = self.nameText.text
+        }
+        age.observe(.value) { (snapshot: DataSnapshot) in
+            if !snapshot.exists() { // ノードに値がなければ追加する
+                age.setValue("0")
             }
+            self.ageText.text = (snapshot.value! as AnyObject).description
+            self.ageLabel.text = self.ageText.text
         }
-
-   }
-    
-    // 名前を変更した時の処理
-    @IBAction func updateNameButtonTapped(_ sender: UIButton) {
-        guard let newName = nameText.text, !newName.isEmpty else {
-            print("名前を入力してください。")
-            return
-        }
+        self.userIdLabel.text = self.targetIdText.text // 取得したユーザーIDをラベルに表示する
         
-        // Realtime Database の名前を更新
-        if let userId = currentUserId {
-            ref.child("User").child(userId).updateChildValues(["name": newName]) { error, _ in
-                if let error = error {
-                    print("名前の更新に失敗しました: \(error.localizedDescription)")
-                } else {
-                    self.nameLabel.text = newName
-                    print("名前が更新されました。")
-                }
-            }
-        }
+        // 入力ボックスと接続状態ラベルを接続状態にする
+        self.stateLabel.text = "########## 接続中 ##########"
+        self.nameText.isEnabled = true
+        self.ageText.isEnabled = true
+        self.deleteButton.isEnabled = true
     }
     
-    // 年齢を変更した時の処理
-    @IBAction func updateAgeButtonTapped(_ sender: UIButton) {
-        guard let newAgeText = ageText.text, let newAge = Int(newAgeText) else {
-            print("年齢を正しく入力してください。")
-            return
-        }
+    // 「削除」ボタンが押されたら呼ばれる
+    @IBAction func userDelete(_ sender: AnyObject) {
+        // 入力ボックスとラベル表示を未接続状態に戻す
+        self.userIdLabel.text = "---"
+        self.nameText.text = ""
+        self.nameLabel.text = "---"
+        self.ageText.text = ""
+        self.ageLabel.text = "---"
+        self.stateLabel.text = "########## 未接続 ##########"
+        self.nameText.isEnabled = false
+        self.ageText.isEnabled = false
+        self.deleteButton.isEnabled = false
         
-        // Realtime Database の年齢を更新
-        if let userId = currentUserId {
-            ref.child("User").child(userId).updateChildValues(["age": newAge]) { error, _ in
-                if let error = error {
-                    print("年齢の更新に失敗しました: \(error.localizedDescription)")
-                } else {
-                    self.ageLabel.text = "\(newAge)"
-                    print("年齢が更新されました。")
-                }
-            }
-        }
+        // リアルタイムに更新されていたDBのノードと入力ボックス紐付けを解除する
+        let name: DatabaseReference = self.userId.child("name")
+        let age: DatabaseReference = self.userId.child("age")
+        name.removeAllObservers()
+        age.removeAllObservers()
+        self.userId.removeValue() // ここで対象のUserを削除する
     }
     
-    // ユーザー削除処理
-    @IBAction func deleteUserButtonTapped(_ sender: UIButton) {
-        if let userId = currentUserId {
-            ref.child("User").child(userId).removeValue { error, _ in
-                if let error = error {
-                    print("ユーザーの削除に失敗しました: \(error.localizedDescription)")
-                } else {
-                    self.currentUserId = nil
-                    self.currentUserName = nil
-                    self.currentUserAge = nil
-                    self.stateLabel.text = "########## 未接続 ##########"
-                    self.userIdLabel.text = "---"
-                    self.nameLabel.text = "---"
-                    self.ageLabel.text = "---"
-                    print("ユーザーが削除されました。")
-                }
-            }
-        }
+    // DBへリアルタイムに更新する名前の入力ボックスの内容が変更される度に呼ばれる
+    @IBAction func nameChanged(_ sender: AnyObject) {
+        let data = ["name": self.nameText.text!]
+        self.userId.updateChildValues(data)
     }
     
-    // UI 更新処理
-    func updateUI() {
-        guard let userId = currentUserId else { return }
-        userIdLabel.text = userId
-        nameLabel.text = currentUserName ?? "---"
-        ageLabel.text = currentUserAge != nil ? "\(currentUserAge!)" : "---"
+    // DBへリアルタイムに更新する年齢の入力ボックスの内容が変更される度に呼ばれる
+    @IBAction func ageChanged(_ sender: AnyObject) {
+        let data = ["age": self.ageText.text!]
+        self.userId.updateChildValues(data)
     }
+    
 }
+
+
