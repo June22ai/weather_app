@@ -20,6 +20,7 @@
 		296251372D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 296251362D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI */; };
 		29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */; };
 		29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */; };
+		299539B42DC84BD00069A640 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299539B32DC84BD00069A640 /* AuthController.swift */; };
 		29B8018C2D4EF068007C8B4B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B8018A2D4EF068007C8B4B /* DetailViewController.swift */; };
 		29B8018D2D4EF068007C8B4B /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B8018B2D4EF068007C8B4B /* DetailView.xib */; };
 		29FAAF8A2DB264DD00FE06E2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 29FAAF892DB264DD00FE06E2 /* FirebaseDatabase */; };
@@ -73,6 +74,7 @@
 		29356B2B2DB48CC50024E984 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		29437D982D0709DE007401F0 /* FavoreteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoreteViewController.swift; sourceTree = "<group>"; };
 		29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConnectionViewController.swift; sourceTree = "<group>"; };
+		299539B32DC84BD00069A640 /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		29B8018A2D4EF068007C8B4B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		29B8018B2D4EF068007C8B4B /* DetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
 		7D64259524473AE800F1DD90 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				29B8018A2D4EF068007C8B4B /* DetailViewController.swift */,
 				291001272DBDAA83002EC1F7 /* LoginViewController.swift */,
 				29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */,
+				299539B32DC84BD00069A640 /* AuthController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */,
 				29356B2C2DB48CC50024E984 /* ContentView.swift in Sources */,
 				29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */,
+				299539B42DC84BD00069A640 /* AuthController.swift in Sources */,
 				7D6425982451AEA500F1DD90 /* WeatherData.swift in Sources */,
 				ADAA27B1231BBFAF00365194 /* AppDelegate.swift in Sources */,
 				7DB97A2C24585AB800C3BB03 /* WeatherModel.swift in Sources */,
