@@ -107,14 +107,14 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
             print("photoURL:", user.photoURL?.absoluteString ?? "No Photo URL")
         }
     }
-    
+   
     // ログアウトボタンLoginViewControllerへ戻る
     @IBAction private func onLogoutButton(_ sender: UIButton) {
-        
+
         do {
             try Auth.auth().signOut()
             print("ログアウト成功")
-            
+
             // LoginViewController をルートに設定し直す
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let sceneDelegate = UIApplication.shared.connectedScenes
@@ -122,7 +122,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
                 let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController")
                 sceneDelegate.window?.rootViewController = loginVC
             }
-            
+
         } catch let error {
             print("ログアウトエラー: \(error.localizedDescription)")
         }

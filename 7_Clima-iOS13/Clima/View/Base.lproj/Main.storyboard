@@ -151,7 +151,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Logout"/>
                                                 <connections>
-                                                    <action selector="onLogoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDf-HG-l00"/>
+                                                    <action selector="onLogoutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sqj-qv-TO5"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -442,7 +442,7 @@
                                             <constraint firstAttribute="height" constant="34" id="zZ7-oY-KRI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoX-7q-1wA" userLabel="新規">
                                         <rect key="frame" x="0.0" y="225" width="382" height="40"/>
@@ -491,6 +491,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="H3A-Zp-rde"/>
         <segue reference="L0P-Ye-lA4"/>
     </inferredMetricsTieBreakers>
     <resources>
