@@ -31,9 +31,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var dadJokeButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton! // 追加: ログアウト用のボタン
     @IBOutlet weak var targetIdText: UIButton!
-   
     
-   
+    
+    
     
     //MARK: Properties
     var apiService = APIService() // APIService のインスタンスを作成
@@ -45,6 +45,18 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
+        favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
+        dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        
+        // その他の初期化
+        locationManager.delegate = self
+        searchField.delegate = self
+        
+        if let user = Auth.auth().currentUser {
+            logoutButton.isHidden = false
+        }
+        
         self.user = Database.database().reference().child("User")
         // 通知の許可リクエスト
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
@@ -78,6 +90,17 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
             }
         }
         
+        //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        //        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        //
+        //        UNUserNotificationCenter.current().add(request) { error in
+        //            if let error = error {
+        //                print("⚠️ 通知エラー: \(error.localizedDescription)")
+        //            } else {
+        //                print("✅ 通知がスケジュールされました")
+        //            }
+        //        }
+        //
         // Firebaseの参照先を設定
         self.user = Database.database().reference().child("user")
         
@@ -107,27 +130,24 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
             print("photoURL:", user.photoURL?.absoluteString ?? "No Photo URL")
         }
     }
-   
-    // ログアウトボタンLoginViewControllerへ戻る
+    
+    
+    // ログアウトボタンAuthControllerへ戻る
     @IBAction private func onLogoutButton(_ sender: UIButton) {
-
         do {
             try Auth.auth().signOut()
             print("ログアウト成功")
-
-            // LoginViewController をルートに設定し直す
+            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let sceneDelegate = UIApplication.shared.connectedScenes
-                .first?.delegate as? SceneDelegate {
-                let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController")
-                sceneDelegate.window?.rootViewController = loginVC
+            if let authVC = storyboard.instantiateViewController(withIdentifier: "AuthController") as? AuthController {
+                authVC.modalPresentationStyle = .fullScreen
+                self.present(authVC, animated: true)
             }
-
+            
         } catch let error {
             print("ログアウトエラー: \(error.localizedDescription)")
         }
     }
-    
     
     @IBAction func locationButtonClicked(_ sender: UIButton) {
         // Get permission
@@ -149,6 +169,13 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     //MARK:- お気に入り画面へ遷移するためのボタンアクション
     @IBAction func favoriteButtun(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let favoriteVC = storyboard.instantiateViewController(withIdentifier: "FavoreteViewController") as? FavoreteViewController {
+            // ナビゲーションコントローラに包む
+            let navController = UINavigationController(rootViewController: favoriteVC)
+            navController.modalPresentationStyle = .fullScreen  // 必要に応じて
+            self.present(navController, animated: true, completion: nil)
+        }
         
     }
     
