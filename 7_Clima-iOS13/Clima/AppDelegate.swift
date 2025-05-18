@@ -29,12 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         if Auth.auth().canHandle(url) {
-        //Firebase認証の場合はAuthのメソッドを使用してURLスキームを処理
-        return Auth.auth().canHandle(url)
-    }
+            //Firebase認証の場合はAuthのメソッドを使用してURLスキームを処理
+            return Auth.auth().canHandle(url)
+        }
+        func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            // Override point for customization after application launch.
+            UpdateCheckManager.shared.setup()
+            return true
+        }
         // その他の処理
-           return false
-       }
+        return false
+    }
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
