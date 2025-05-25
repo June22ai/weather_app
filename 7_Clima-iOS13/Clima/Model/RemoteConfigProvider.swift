@@ -1,5 +1,5 @@
 //
-//  RemorteConfigProvider.swift
+//  RemoteConfigProvider.swift
 //  Clima
 //
 //  Created by Ai Tanigwa on 2025/05/17.

@@ -73,9 +73,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="62" height="102.5"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="tinted" title="Push"/>
-                                                <connections>
-                                                    <action selector="notifyButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hJq-Nd-7eV"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -499,7 +496,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="H3A-Zp-rde"/>
         <segue reference="L0P-Ye-lA4"/>
     </inferredMetricsTieBreakers>
     <resources>

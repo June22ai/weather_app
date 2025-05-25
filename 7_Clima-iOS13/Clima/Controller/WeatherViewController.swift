@@ -53,11 +53,11 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         locationManager.delegate = self
         searchField.delegate = self
         
-        if let user = Auth.auth().currentUser {
+        if Auth.auth().currentUser != nil {
             logoutButton.isHidden = false
         }
         
-        self.user = Database.database().reference().child("User")
+        self.user = Database.database().reference().child("user")
         // 通知の許可リクエスト
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -67,40 +67,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
             }
             
         }
-    }
-    @IBAction func notifyButtonTapped(_ sender: UIButton) {
-        scheduleNotification()
-    }
-    
-    
-    func scheduleNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = "こんにちは！"
-        content.body = "これはローカル通知です📣"
-        content.sound = .default
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("⚠️ 通知エラー: \(error.localizedDescription)")
-            } else {
-                print("✅ 通知がスケジュールされました")
-            }
-        }
-        
-        //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        //        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        //
-        //        UNUserNotificationCenter.current().add(request) { error in
-        //            if let error = error {
-        //                print("⚠️ 通知エラー: \(error.localizedDescription)")
-        //            } else {
-        //                print("✅ 通知がスケジュールされました")
-        //            }
-        //        }
-        //
+
         // Firebaseの参照先を設定
         self.user = Database.database().reference().child("user")
         
@@ -210,7 +177,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     // MARK: - Fetch Weather by City Name
     func fetchWeatherByCityName(_ cityName: String) {
         let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
-        //let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+       
         let urlString = "\(R.string.localizable.weatherAPIBaseURL)\(encodedCityName)&appid=\(R.string.localizable.apiKey)&units=metric"
         
         // APIService.request メソッドを使用してデータを取得

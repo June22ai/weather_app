@@ -50,15 +50,16 @@ class UpdateCheckManager {
         guard let rootViewController = getTopViewController() else { return }
         
         let alertController = UIAlertController(title: "アップデートが必要です", message: "新しいバージョンがApp Storeにあります。アップデートしてください。", preferredStyle: .alert)
-
+        
         let updateAction = UIAlertAction(title: "アップデート", style: .default) { _ in
             guard let url = URL(string:
-                  "https://weather-app-c9f5f.firebaseapp.com/"),
-
-                  UIApplication.shared.canOpenURL(url) else { return }
+                "https://www.apple.com/jp/app-store/"
+            ),
+                  
+                    UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-
+        
         let laterAction = UIAlertAction(title: "あとで", style: .cancel, handler: nil)
         
         alertController.addAction(updateAction)
