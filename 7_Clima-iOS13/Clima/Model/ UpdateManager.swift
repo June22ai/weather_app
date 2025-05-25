@@ -5,52 +5,76 @@
 //  Created by Ai Tanigwa on 2025/05/17.
 //  Copyright © 2025 App Brewery. All rights reserved.
 //
-
+//必要なフレームワークをインポート
 import Foundation
 import Combine
+import Firebase
 import FirebaseRemoteConfig
 import UIKit
-//強制アップデートに関する処理を担当するクラス
-final class UpdateCheckManager {
-
+//バージョンのチェックと必要ならばアップデートのアラートを表示するためのクラスを定義
+class UpdateCheckManager {
+    // Firebase Remote Configのインスタンスをプライベートプロパティとして保持
+    private let remoteConfig = RemoteConfig.remoteConfig()
+    //updateCheckerのシングルトンインスタンスを作成
     static let shared = UpdateCheckManager()
-    //Firebase Remote Configとの通信とパラメータ取得
-    private let remoteConfigProvider = FirebaseRemoteConfigProvider()
-    private var cancellable: AnyCancellable?
-
-    private init() {}
-
-    func setup() {
-        observeApplicationDidBecomeActive()
+    //UIApplicationがアクティブになった時に呼ばれる関数を設定
+    public func observeApplicationDidBecomeActive() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    //UpdateCheckManagerでdidBecomeActiveを監視
-    // アプリがActiveになった際にアップデートチェック
-    //FirebaseRemoteConfigProviderにFirebaseのコンソールで設定したパラメータを取ってきてもらう
-    private func observeApplicationDidBecomeActive() {
-        cancellable = NotificationCenter.Publisher(center: .default, name: UIApplication.didBecomeActiveNotification, object: nil)
-            .sink(receiveValue: { [weak self] _ in
-                FirebaseRemoteConfigProvider().fetchConfig(completion: {
-                    self?.forceUpdateIfNeeded()
-                })
-            })
+    //UIApplicationがアクティブになった時にRemote Configを取得し、バージョンのチェック
+    @objc private func applicationDidBecomeActive() {
+        fetchRemoteConfigAndCheckVersion()
     }
-
-    // requireForceUpdateがtrueかつ現在のバージョンが最新のバージョンと異なる場合に強制アップデート
-    private func forceUpdateIfNeeded() {
-        let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        //Firebase Remote Configのパラメータ名を定義
-        let requireForceUpdate = remoteConfigProvider.getConfig(key: .forceUpdateRequired).boolValue
-
-        if requireForceUpdate,
-           let currentVersionString = remoteConfigProvider.getConfig(key: .currentVersion).stringValue,
-           localVersionString != currentVersionString
-        {
-            guard let storeUrlString = remoteConfigProvider.getConfig(key: .storeUrl).stringValue,
-                  let _ = URL(string: storeUrlString)
-            else {
+    //Remote Configを取得し、バージョンのチェックを行う関数
+    private func fetchRemoteConfigAndCheckVersion() {
+        remoteConfig.fetch(withExpirationDuration: 0) { (status, error) in
+            guard error == nil else {
+                print("error in fetching. value: \(String(describing: error))")
                 return
             }
-            // 強制アップデートのアラートを出す
+            self.remoteConfig.fetchAndActivate { _, _ in
+                if self.checkVersion() {
+                    self.showUpdateAlertIfNeeded()
+                }
+            }
+        }
+    }
+   //Firebaseから取得したバージョンとローカルのアプリのバージョンを比較し、一致しなければtrueを返す
+    private func checkVersion() -> Bool {
+        let currentVersion = remoteConfig.configValue(forKey: "current_version").stringValue ?? ""
+        let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+        return currentVersion != localVersionString
+    }
+    //バージョンが一致しない場合にアップデートを促すアラートを表示
+    private func showUpdateAlertIfNeeded() {
+        guard let rootViewController = getTopViewController() else { return }
+        
+        let alertController = UIAlertController(title: "アップデートが必要です", message: "新しいバージョンがApp Storeにあります。アップデートしてください。", preferredStyle: .alert)
+
+        let updateAction = UIAlertAction(title: "アップデート", style: .default) { _ in
+            guard let url = URL(string:
+                  "https://weather-app-c9f5f.firebaseapp.com/"),
+
+                  UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+
+        let laterAction = UIAlertAction(title: "あとで", style: .cancel, handler: nil)
+        
+        alertController.addAction(updateAction)
+        alertController.addAction(laterAction)
+        rootViewController.present(alertController, animated: true, completion: nil)
+    }
+    //表示中の最上位のViewControllerを取得
+    private func getTopViewController(_ viewController: UIViewController? = UIApplication.shared.windows.first?.rootViewController) -> UIViewController? {
+        if let navigationController = viewController as? UINavigationController {
+            return getTopViewController(navigationController.visibleViewController)
+        } else if let tabBarController = viewController as? UITabBarController, let selected = tabBarController.selectedViewController {
+            return getTopViewController(selected)
+        } else if let presented = viewController?.presentedViewController {
+            return getTopViewController(presented)
+        } else {
+            return viewController
         }
     }
 }

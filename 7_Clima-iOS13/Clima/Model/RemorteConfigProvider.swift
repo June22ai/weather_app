@@ -8,8 +8,8 @@
 
 import Foundation
 import FirebaseRemoteConfig
-
-/// Firebaseのコンソールで設定したパラメータ名に対応
+import Firebase
+// Firebaseのコンソールで設定したパラメータ名に対応
 enum ConfigKey: String {
     case currentVersion = "current_version"
     case forceUpdateRequired = "require_force_update"
