@@ -10,8 +10,14 @@ import UIKit
 import CoreLocation
 import SwiftUI
 import RswiftResources
+import FirebaseAuthUI
+import FirebaseGoogleAuthUI
+import FirebaseAuth
+import FirebaseDatabase
+import UserNotifications
 
-class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate  {
+
+class WeatherViewController: UIViewController, UINavigationControllerDelegate, CLLocationManagerDelegate,FUIAuthDelegate  {
     
     
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -23,6 +29,9 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var dadJokeButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton! // 追加: ログアウト用のボタン
+    @IBOutlet weak var targetIdText: UIButton!
+    
     
     
     
@@ -30,19 +39,81 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     var apiService = APIService() // APIService のインスタンスを作成
     var weatherManager = WeatherDataManager()
     let locationManager = CLLocationManager()
+    var user: DatabaseReference!    // 参照先DB（Userノード）※UserIdの親ノード
+    var userId: DatabaseReference!  // 参照先DB（指定したUserIdノード）
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
+        favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
+        dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        
+        // その他の初期化
+        locationManager.delegate = self
+        searchField.delegate = self
+        
+        if Auth.auth().currentUser != nil {
+            logoutButton.isHidden = false
+        }
+        
+        self.user = Database.database().reference().child("user")
+        // 通知の許可リクエスト
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("✅ 通知の許可がされました")
+            } else {
+                print("❌ 通知が拒否されました")
+            }
+            
+        }
+
+        // Firebaseの参照先を設定
+        self.user = Database.database().reference().child("user")
         
         locationManager.delegate = self
-        //weatherManager.delegate = self
         searchField.delegate = self
         
         // ボタンにローカライズされたタイトルを設定
         nextButton.setTitle(R.string.localizable.next_screen(), for: .normal)
         favoriteButton.setTitle(R.string.localizable.favorite(), for: .normal)
         dadJokeButton.setTitle(R.string.localizable.dad_joke(), for: .normal)
+        // ログイン状態に応じてUIを更新
+        if let user = Auth.auth().currentUser {
+            // ユーザーがログインしている場合
+            print("Logged in as \(user.displayName ?? "No Name")")
+            // ログイン後のUI更新（例: ログアウトボタンの表示）
+            logoutButton.isHidden = false
+        } else {
+            // ユーザーがログインしていない場合
+            print("No user logged in.")
+            // ログインボタンの表示（必要なら）
+        }
         
+        // 現在のユーザー情報を表示
+        if let user = Auth.auth().currentUser {
+            print("uid:", user.uid)
+            print("displayName:", user.displayName ?? "No Display Name")
+            print("photoURL:", user.photoURL?.absoluteString ?? "No Photo URL")
+        }
+    }
+    
+    
+    // ログアウトボタンAuthControllerへ戻る
+    @IBAction private func onLogoutButton(_ sender: UIButton) {
+        do {
+            try Auth.auth().signOut()
+            print("ログアウト成功")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let authVC = storyboard.instantiateViewController(withIdentifier: "AuthController") as? AuthController {
+                authVC.modalPresentationStyle = .fullScreen
+                self.present(authVC, animated: true)
+            }
+            
+        } catch let error {
+            print("ログアウトエラー: \(error.localizedDescription)")
+        }
     }
     
     @IBAction func locationButtonClicked(_ sender: UIButton) {
@@ -65,18 +136,25 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     //MARK:- お気に入り画面へ遷移するためのボタンアクション
     @IBAction func favoriteButtun(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let favoriteVC = storyboard.instantiateViewController(withIdentifier: "FavoreteViewController") as? FavoreteViewController {
+            // ナビゲーションコントローラに包む
+            let navController = UINavigationController(rootViewController: favoriteVC)
+            navController.modalPresentationStyle = .fullScreen  // 必要に応じて
+            self.present(navController, animated: true, completion: nil)
+        }
         
     }
     
-        //MARK:- 次の画面へ遷移するためのボタンアクション
+    //MARK:- 次の画面へ遷移するためのボタンアクション
     @IBAction func NextPage(_ sender: UIButton) {
-            performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
-        }
+        performSegue(withIdentifier: "showFavoreteScreen", sender: nil)
+    }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "showFavoreteScreen"{
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFavoreteScreen"{
         }
+    }
     
     //MARK:- TextField extension
     @IBAction func searchBtnClicked(_ sender: UIButton) {
@@ -99,7 +177,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     // MARK: - Fetch Weather by City Name
     func fetchWeatherByCityName(_ cityName: String) {
         let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
-        //let urlString = "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&q=\(encodedCityName)"
+       
         let urlString = "\(R.string.localizable.weatherAPIBaseURL)\(encodedCityName)&appid=\(R.string.localizable.apiKey)&units=metric"
         
         // APIService.request メソッドを使用してデータを取得
@@ -123,7 +201,7 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         // APIService.request メソッドを使用してデータを取得
         APIService.request(urlString: urlString) { [weak self] (result: Result<WeatherModel, APIError>) in
-           
+            
             switch result {
             case .success(let weatherModel):
                 DispatchQueue.main.async {
@@ -157,8 +235,8 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
     
     // MARK:- DadJokeメソッド追加
     @IBAction func fetchDadJoke() {
-    // ランダムなジョークを取得するためのURL
-    //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
+        // ランダムなジョークを取得するためのURL
+        //urlString のようにコード内で固定的に使用する文字列（APIのURLなど）は、Localizable.stringsに記載する必要はない
         
         guard let url = URL(string: "https://icanhazdadjoke.com/") else {
             return
@@ -166,11 +244,11 @@ class WeatherViewController: UIViewController, UINavigationControllerDelegate, C
         
         // ヘッダーを設定してリクエストを作成
         let headers = ["Accept": "application/json"]
-  
+        
         
         // APIServiceを使ってリクエストを送信
         APIService.request(urlString: url.absoluteString, headers: headers) { (result: Result<JokeResponse, APIError>) in
-
+            
             switch result {
             case .success(let jokeResponse):
                 DispatchQueue.main.async {

@@ -23,6 +23,7 @@ class FavoreteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemBackground
         title = "都市一覧"
         
         backButton.setTitle(R.string.localizable.back(), for: .normal)

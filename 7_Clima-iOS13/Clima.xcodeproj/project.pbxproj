@@ -9,12 +9,24 @@
 /* Begin PBXBuildFile section */
 		2902D9ED2D7D1AA8002B9DB6 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902D9EC2D7D1AA8002B9DB6 /* APIService.swift */; };
 		2902D9F12D7D39C8002B9DB6 /* JokeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902D9F02D7D39C8002B9DB6 /* JokeResponse.swift */; };
+		2904B0F12D98EB6000ABA6B5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2904B0F02D98EB6000ABA6B5 /* FirebaseAnalytics */; };
+		290D28E12DA15C62006C0F2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290D28E02DA15C62006C0F2A /* GoogleService-Info.plist */; };
+		291001282DBDAA83002EC1F7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291001272DBDAA83002EC1F7 /* LoginViewController.swift */; };
 		292E6DC02D859E3200328993 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 292E6DBF2D859E3200328993 /* RswiftLibrary */; };
 		292E6DC72D85A32F00328993 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 292E6DC92D85A32F00328993 /* Localizable.strings */; };
+		29356B2C2DB48CC50024E984 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356B2B2DB48CC50024E984 /* ContentView.swift */; };
 		29437D9A2D0709DE007401F0 /* FavoreteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29437D982D0709DE007401F0 /* FavoreteViewController.swift */; };
+		296251352D9D4C3400FE0FE8 /* FirebaseAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 296251342D9D4C3400FE0FE8 /* FirebaseAuthUI */; };
+		296251372D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 296251362D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI */; };
 		29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */; };
+		29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */; };
+		299539B42DC84BD00069A640 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299539B32DC84BD00069A640 /* AuthController.swift */; };
 		29B8018C2D4EF068007C8B4B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B8018A2D4EF068007C8B4B /* DetailViewController.swift */; };
 		29B8018D2D4EF068007C8B4B /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B8018B2D4EF068007C8B4B /* DetailView.xib */; };
+		29BD5D662DD97E7900EA3EAF /* RemoteConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BD5D652DD97E7900EA3EAF /* RemoteConfigProvider.swift */; };
+		29BD5D682DD97F9B00EA3EAF /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 29BD5D672DD97F9B00EA3EAF /* FirebaseRemoteConfig */; };
+		29BD5D6A2DD9814100EA3EAF /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BD5D692DD9814100EA3EAF /* UpdateManager.swift */; };
+		29FAAF8A2DB264DD00FE06E2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 29FAAF892DB264DD00FE06E2 /* FirebaseDatabase */; };
 		7D64259624473AE800F1DD90 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D64259524473AE800F1DD90 /* WeatherDataManager.swift */; };
 		7D6425982451AEA500F1DD90 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6425972451AEA500F1DD90 /* WeatherData.swift */; };
 		7DB97A2C24585AB800C3BB03 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB97A2B24585AB800C3BB03 /* WeatherModel.swift */; };
@@ -28,16 +40,48 @@
 		ADAA27CE231BC87F00365194 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ADAA27CD231BC87F00365194 /* README.md */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		29356B252DB48AF90024E984 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 29356AF22DB48AF30024E984;
+			remoteInfo = LocalNotificationDemo;
+		};
+		29356B272DB48AF90024E984 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 29356B022DB48AF70024E984;
+			remoteInfo = LocalNotificationDemoTests;
+		};
+		29356B292DB48AF90024E984 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 29356B0C2DB48AF70024E984;
+			remoteInfo = LocalNotificationDemoUITests;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2902D9EC2D7D1AA8002B9DB6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIService.swift; path = Clima/APIService.swift; sourceTree = SOURCE_ROOT; };
 		2902D9F02D7D39C8002B9DB6 /* JokeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JokeResponse.swift; sourceTree = "<group>"; };
+		290D28E02DA15C62006C0F2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		291001272DBDAA83002EC1F7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		292E6DC82D85A32F00328993 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		292E6DCA2D85A3AA00328993 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		292E6DCB2D85A3AA00328993 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		292E6DCC2D85A3AB00328993 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocalNotificationDemo.xcodeproj; path = ../../Desktop/w_app/weather_app/LocalNotificationDemo/LocalNotificationDemo.xcodeproj; sourceTree = "<group>"; };
+		29356B2B2DB48CC50024E984 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		29437D982D0709DE007401F0 /* FavoreteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoreteViewController.swift; sourceTree = "<group>"; };
+		29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConnectionViewController.swift; sourceTree = "<group>"; };
+		299539B32DC84BD00069A640 /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		29B8018A2D4EF068007C8B4B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		29B8018B2D4EF068007C8B4B /* DetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
+		29BD5D652DD97E7900EA3EAF /* RemoteConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigProvider.swift; sourceTree = "<group>"; };
+		29BD5D692DD9814100EA3EAF /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		7D64259524473AE800F1DD90 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		7D6425972451AEA500F1DD90 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		7DB97A2B24585AB800C3BB03 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
@@ -59,6 +103,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29FAAF8A2DB264DD00FE06E2 /* FirebaseDatabase in Frameworks */,
+				2904B0F12D98EB6000ABA6B5 /* FirebaseAnalytics in Frameworks */,
+				296251352D9D4C3400FE0FE8 /* FirebaseAuthUI in Frameworks */,
+				29BD5D682DD97F9B00EA3EAF /* FirebaseRemoteConfig in Frameworks */,
+				296251372D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI in Frameworks */,
 				292E6DC02D859E3200328993 /* RswiftLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,9 +122,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		29356B202DB48AF70024E984 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				29356B262DB48AF90024E984 /* LocalNotificationDemo.app */,
+				29356B282DB48AF90024E984 /* LocalNotificationDemoTests.xctest */,
+				29356B2A2DB48AF90024E984 /* LocalNotificationDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ADAA27A4231BBFAF00365194 = {
 			isa = PBXGroup;
 			children = (
+				29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */,
 				292E6DC92D85A32F00328993 /* Localizable.strings */,
 				ADAA27CD231BC87F00365194 /* README.md */,
 				ADAA27AF231BBFAF00365194 /* Clima */,
@@ -103,6 +163,7 @@
 				ADAA27B9231BBFB300365194 /* Assets.xcassets */,
 				ADAA27BB231BBFB300365194 /* LaunchScreen.storyboard */,
 				ADAA27BE231BBFB300365194 /* Info.plist */,
+				290D28E02DA15C62006C0F2A /* GoogleService-Info.plist */,
 				ADAA27C5231BC02B00365194 /* dark_background.pdf */,
 				ADAA27C4231BC02B00365194 /* light_background.pdf */,
 			);
@@ -115,6 +176,9 @@
 				ADAA27B4231BBFAF00365194 /* WeatherViewController.swift */,
 				29437D982D0709DE007401F0 /* FavoreteViewController.swift */,
 				29B8018A2D4EF068007C8B4B /* DetailViewController.swift */,
+				291001272DBDAA83002EC1F7 /* LoginViewController.swift */,
+				29879CA92DBDC50800FAE178 /* UserConnectionViewController.swift */,
+				299539B32DC84BD00069A640 /* AuthController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -124,6 +188,7 @@
 			children = (
 				ADAA27B6231BBFAF00365194 /* Main.storyboard */,
 				29B8018B2D4EF068007C8B4B /* DetailView.xib */,
+				29356B2B2DB48CC50024E984 /* ContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -137,6 +202,8 @@
 				7D64259524473AE800F1DD90 /* WeatherDataManager.swift */,
 				7D6425972451AEA500F1DD90 /* WeatherData.swift */,
 				7DB97A2B24585AB800C3BB03 /* WeatherModel.swift */,
+				29BD5D652DD97E7900EA3EAF /* RemoteConfigProvider.swift */,
+				29BD5D692DD9814100EA3EAF /* UpdateManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,6 +227,11 @@
 			name = Clima;
 			packageProductDependencies = (
 				292E6DBF2D859E3200328993 /* RswiftLibrary */,
+				2904B0F02D98EB6000ABA6B5 /* FirebaseAnalytics */,
+				296251342D9D4C3400FE0FE8 /* FirebaseAuthUI */,
+				296251362D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI */,
+				29FAAF892DB264DD00FE06E2 /* FirebaseDatabase */,
+				29BD5D672DD97F9B00EA3EAF /* FirebaseRemoteConfig */,
 			);
 			productName = Clima;
 			productReference = ADAA27AD231BBFAF00365194 /* Clima.app */;
@@ -171,6 +243,9 @@
 		ADAA27A5231BBFAF00365194 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "App Brewery";
@@ -192,15 +267,47 @@
 			mainGroup = ADAA27A4231BBFAF00365194;
 			packageReferences = (
 				292E6DBE2D859E3200328993 /* XCRemoteSwiftPackageReference "R" */,
+				2904B0EF2D98EB5F00ABA6B5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				296251332D9D4C3400FE0FE8 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */,
 			);
 			productRefGroup = ADAA27AE231BBFAF00365194 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 29356B202DB48AF70024E984 /* Products */;
+					ProjectRef = 29356B1F2DB48AF70024E984 /* LocalNotificationDemo.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				ADAA27AC231BBFAF00365194 /* Clima */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		29356B262DB48AF90024E984 /* LocalNotificationDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LocalNotificationDemo.app;
+			remoteRef = 29356B252DB48AF90024E984 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		29356B282DB48AF90024E984 /* LocalNotificationDemoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LocalNotificationDemoTests.xctest;
+			remoteRef = 29356B272DB48AF90024E984 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		29356B2A2DB48AF90024E984 /* LocalNotificationDemoUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LocalNotificationDemoUITests.xctest;
+			remoteRef = 29356B292DB48AF90024E984 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		ADAA27AB231BBFAF00365194 /* Resources */ = {
@@ -213,6 +320,7 @@
 				ADAA27BD231BBFB300365194 /* LaunchScreen.storyboard in Resources */,
 				ADAA27BA231BBFB300365194 /* Assets.xcassets in Resources */,
 				292E6DC72D85A32F00328993 /* Localizable.strings in Resources */,
+				290D28E12DA15C62006C0F2A /* GoogleService-Info.plist in Resources */,
 				ADAA27B8231BBFAF00365194 /* Main.storyboard in Resources */,
 				ADAA27C6231BC02C00365194 /* light_background.pdf in Resources */,
 			);
@@ -225,16 +333,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291001282DBDAA83002EC1F7 /* LoginViewController.swift in Sources */,
 				7D64259624473AE800F1DD90 /* WeatherDataManager.swift in Sources */,
+				29879CAA2DBDC50800FAE178 /* UserConnectionViewController.swift in Sources */,
+				29356B2C2DB48CC50024E984 /* ContentView.swift in Sources */,
 				29633C2C2D086B97005C4BCC /* WeatherViewController.swift in Sources */,
+				299539B42DC84BD00069A640 /* AuthController.swift in Sources */,
 				7D6425982451AEA500F1DD90 /* WeatherData.swift in Sources */,
 				ADAA27B1231BBFAF00365194 /* AppDelegate.swift in Sources */,
+				29BD5D662DD97E7900EA3EAF /* RemoteConfigProvider.swift in Sources */,
 				7DB97A2C24585AB800C3BB03 /* WeatherModel.swift in Sources */,
 				ADAA27B3231BBFAF00365194 /* SceneDelegate.swift in Sources */,
 				29437D9A2D0709DE007401F0 /* FavoreteViewController.swift in Sources */,
 				2902D9F12D7D39C8002B9DB6 /* JokeResponse.swift in Sources */,
 				2902D9ED2D7D1AA8002B9DB6 /* APIService.swift in Sources */,
 				29B8018C2D4EF068007C8B4B /* DetailViewController.swift in Sources */,
+				29BD5D6A2DD9814100EA3EAF /* UpdateManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +570,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2904B0EF2D98EB5F00ABA6B5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		292E6DBE2D859E3200328993 /* XCRemoteSwiftPackageReference "R" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mac-cain13/R.swift";
@@ -464,9 +586,22 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		296251332D9D4C3400FE0FE8 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/FirebaseUI-iOS.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2904B0F02D98EB6000ABA6B5 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2904B0EF2D98EB5F00ABA6B5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		292E6DBF2D859E3200328993 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 292E6DBE2D859E3200328993 /* XCRemoteSwiftPackageReference "R" */;
@@ -475,6 +610,26 @@
 		292E6DC22D859FE900328993 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:RswiftGenerateInternalResources";
+		};
+		296251342D9D4C3400FE0FE8 /* FirebaseAuthUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 296251332D9D4C3400FE0FE8 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseAuthUI;
+		};
+		296251362D9D4C3400FE0FE8 /* FirebaseGoogleAuthUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 296251332D9D4C3400FE0FE8 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseGoogleAuthUI;
+		};
+		29BD5D672DD97F9B00EA3EAF /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2904B0EF2D98EB5F00ABA6B5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		29FAAF892DB264DD00FE06E2 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2904B0EF2D98EB5F00ABA6B5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
